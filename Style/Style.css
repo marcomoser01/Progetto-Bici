@@ -28,6 +28,10 @@ img {
     grid-template-columns: 50% 50%;
 }
 
+.div-RowCarrello {
+    margin: 5% 0% 0% 0%;
+}
+
 .div-contenitoreBiciclette {
     display: block;
 }
