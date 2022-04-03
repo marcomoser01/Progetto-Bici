@@ -1,0 +1,99 @@
+[{
+        "ID": 0,
+        "Categoria": "Electric",
+        "Modello": "Rad Rover",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603490610597-BNTQH3MHP03CUX6P79IO/DSC_0067.jpg?format=500w"
+    },
+    {
+        "ID": 1,
+        "Categoria": "Standard Pedal",
+        "Modello": "7 Speed Cruiser",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603493727812-QBU7JHQ55ULJ44GK4Z37/DSC_0085.jpg?format=750w"
+    },
+    {
+        "ID": 2,
+        "Categoria": "Electric",
+        "Modello": "Rad Rover Step-thru",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603490921238-0ERHSU04WKO1TXB0STLD/DSC_0073.jpg?format=500w"
+    },
+    {
+        "ID": 3,
+        "Categoria": "Electric",
+        "Modello": "Rad City Step-over",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603490977387-U1JQF5GHT3V3ZAKF6YAB/DSC_0092.jpg?format=500w"
+    },
+    {
+        "ID": 4,
+        "Categoria": "Electric",
+        "Modello": "RadCity Step-thru",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491027510-BK1A14K0BZO8YZIQ1HUT/DSC_0065.jpg?format=500w"
+    },
+    {
+        "ID": 5,
+        "Categoria": "Electric",
+        "Modello": "Rad Runner",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603493639568-OFE5NYISUT27PB97NY19/DSC_0070.jpg?format=750w"
+    },
+    {
+        "ID": 6,
+        "Categoria": "Electric",
+        "Modello": "Rad Mini Step-thru",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491126840-P6OC4GZ8WOTPUEI67WM8/DSC_0072.jpg?format=750w"
+    },
+    {
+        "ID": 7,
+        "Categoria": "Standard Pedal",
+        "Modello": "7 Speed Step-Thru Cruiser",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491281593-QFMINPNCNSGNZFN1TCPG/DSC_0094.jpg?format=750w"
+    },
+    {
+        "ID": 8,
+        "Categoria": "Standard Pedal",
+        "Modello": "Hybrid",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491332367-VKCOUZM8IS60SN6ONGY5/DSC_0078.jpg?format=750w"
+    },
+    {
+        "ID": 9,
+        "Categoria": "Standard Pedal",
+        "Modello": "Hybrid Step-thru",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491367132-9HBS0XT1OL5XQDZTIF2O/DSC_0075.jpg?format=750w"
+    },
+    {
+        "ID": 10,
+        "Categoria": "Premium Bikes",
+        "Modello": "Premium Road Bike",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603490755883-DV8OLO2Z8SI2ZPZ17ZZ3/DSC_0080.jpg?format=500w"
+    },
+    {
+        "ID": 11,
+        "Categoria": "Premium Bikes",
+        "Modello": "Premium Mountain Bike",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603490701012-H10X9OK2YWVEF1R1CDIH/DSC_0103.jpg?format=500w"
+    },
+    {
+        "ID": 12,
+        "Categoria": "Kids' Bikes",
+        "Modello": "Kid's Step-over Bike",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491754026-9QPIHTVA5XKBP0PB54UQ/DSC_0098.jpg?format=750w"
+    },
+    {
+        "ID": 13,
+        "Categoria": "Kids' Bikes",
+        "Modello": "Kid's  Step-thru Bike",
+        "Affittata": false,
+        "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491792548-8OHM0LEUOYMDMGPCY0C2/DSC_0097.jpg?format=750w"
+    }
+]
