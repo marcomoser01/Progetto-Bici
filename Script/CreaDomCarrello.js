@@ -1,14 +1,15 @@
 import { GetCarrello } from './GestioneScelte.js';
-import { GetDatiByID } from './ClassDati.js';
 
 let CARRELLO;
 let SCELTE = [];
 
 export function creaDomCarrello() {
+    let storage = localStorage.getItem("carrello-bici");
     hiddenPrenota();
     setCarrelloDati();
     removeAllChildNodes("div-catalogo");
     creaDivCarrello();
+    localStorage.setItem('carrello-bici', JSON.stringify(SCELTE));
 }
 
 function hiddenPrenota() {
@@ -22,7 +23,7 @@ function hiddenPrenota() {
 }
 
 function setCarrelloDati() {
-    CARRELLO = GetDatiByID(GetCarrello());
+    CARRELLO = GetCarrello();
 }
 
 function removeAllChildNodes(id) {
@@ -50,7 +51,6 @@ function creaDivCarrello() {
         label.appendChild(creaRowCarrello(item));
         divCatalogo.insertBefore(label, null);
     }
-    console.log(SCELTE);
 }
 
 
@@ -83,12 +83,15 @@ function creaDivBiciclettaSingola(bicicletta) {
 }
 
 function creaRadioBottonPrice(bicicletta) {
+    console.log(bicicletta);
     let Form = document.createElement('form');
+
     for (let item of Object.keys(bicicletta.Prezzi)) {
         Form.appendChild(createDivRadio(bicicletta.ID, [item, bicicletta.Prezzi[item]]));
     }
     Form.setAttribute('id', 'id-RadioButton-' + bicicletta.ID)
     return Form;
+
 }
 
 function createDivRadio(id, prezzo) {

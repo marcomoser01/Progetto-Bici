@@ -239,15 +239,9 @@ export function GetStatusAffittate() {
     return risultato;
 }
 
-export function GetDatiByID(arrayID) {
-    let risultato = [],
-        datiMomentanei;
-    for (let item of arrayID) {
-        datiMomentanei = GetBiciByID(item);
-        datiMomentanei.Prezzi = GetPrice(GetNameCategoryByIndex(item));
-        risultato.push(datiMomentanei);
-        datiMomentanei = [];
-    }
+export function GetDatiByID(ID) {
+    let bicicletta = GetBiciByID(ID);
+    bicicletta.Prezzi = GetPrice(GetNameCategoryByIndex(GetIndexCategoria(ID)));
+    return bicicletta;
 
-    return risultato;
 }

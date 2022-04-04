@@ -1,5 +1,6 @@
-import { Prenota } from './GestioneScelte.js';
+import { Prenota, AggiungiACarrello } from './GestioneScelte.js';
 import * as DomCarrello from './CreaDomCarrello.js';
 
 $("#BottonePrenota").click(Prenota);
 $("#BottoneCarrello").click(DomCarrello.creaDomCarrello);
+$("#BottoneAggiungiCarrello").click(AggiungiACarrello);

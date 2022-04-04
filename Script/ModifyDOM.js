@@ -1,6 +1,8 @@
+//Devo gestire che le bici che sono già presenti in carrello vengano già in grigio
+
 export { CreaDivMenu, CambiaScalaGrigi }
 import { IsAffittata } from './ClassDati.js';
-import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello } from './GestioneScelte.js';
+import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello, pullCarrello } from './GestioneScelte.js';
 
 
 
@@ -9,6 +11,7 @@ import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello } from './Ge
     @dati --> dati delle biciclette per poter creare il menù
 */
 function CreaDivMenu(dati) {
+    pullCarrello();
     let divCatalogo = document.getElementById('div-catalogo');
 
     for (let item of dati) {
@@ -132,7 +135,11 @@ function CreaDOMImmagine(bicicletta) {
     img.setAttribute('class', 'img-biciletta');
     img.setAttribute('id', 'id-img-' + bicicletta.ID);
     img.src = bicicletta.Immagine;
-    img.style.filter = "grayscale(0)";
+    if (IndiceBiciInCarrello(bicicletta.ID) == -1) {
+        img.style.filter = "grayscale(0)";
+    } else {
+        img.style.filter = "grayscale(1)";
+    }
     return img;
 }
 
