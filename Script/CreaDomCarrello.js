@@ -2,6 +2,7 @@ import { GetCarrello } from './GestioneScelte.js';
 import { GetDatiByID } from './ClassDati.js';
 
 let CARRELLO;
+let SCELTE = [];
 
 export function creaDomCarrello() {
     hiddenPrenota();
@@ -41,11 +42,15 @@ function creaDivCarrello() {
     let label;
 
     for (let item of CARRELLO) {
+        SCELTE.push({
+            ID: item.ID,
+            FasciaOraria: 'HalfDay'
+        });
         label = document.createElement('label');
         label.appendChild(creaRowCarrello(item));
         divCatalogo.insertBefore(label, null);
     }
-
+    console.log(SCELTE);
 }
 
 
@@ -82,6 +87,7 @@ function creaRadioBottonPrice(bicicletta) {
     for (let item of Object.keys(bicicletta.Prezzi)) {
         Form.appendChild(createDivRadio(bicicletta.ID, [item, bicicletta.Prezzi[item]]));
     }
+    Form.setAttribute('id', 'id-RadioButton-' + bicicletta.ID)
     return Form;
 }
 
@@ -90,9 +96,9 @@ function createDivRadio(id, prezzo) {
     let input = document.createElement('input');
     input.setAttribute('type', 'radio');
     input.setAttribute('class', 'input-radio');
-    input.setAttribute('id', 'radio-bici-' + id);
+    input.setAttribute('id', 'radio-ID-' + id + '-Prezzo-' + prezzo[0]);
     input.setAttribute('name', 'prezzo');
-    input.setAttribute('value', prezzo[0]);
+    input.addEventListener('change', () => { onchangeRadioButton(id, prezzo[0]) });
     label.appendChild(input);
     label.appendChild(document.createTextNode(prezzo[0] + ":\t" + prezzo[1]));
     return label;
@@ -103,11 +109,6 @@ function creaDOMDivBici(bicicletta) {
     let divBici = document.createElement('div');
     divBici.setAttribute('id', 'ID-bici-' + bicicletta.ID);
     divBici.setAttribute('class', 'div-bicicletta');
-    /*
-    divBici.addEventListener('click', () => { ClickBicicletta(bicicletta.ID) });
-    divBici.addEventListener('mouseover', () => { MouseoverBicicletta(bicicletta.ID) });
-    divBici.addEventListener('mouseout', () => { MouseoutBicicletta(bicicletta.ID) });
-    */
     return divBici;
 }
 
@@ -126,4 +127,20 @@ function creaDOMModello(bicicletta) {
     modello.setAttribute('id', 'id-p-' + bicicletta.ID);
     modello.innerText = bicicletta.Modello;
     return modello;
+}
+
+function onchangeRadioButton(id, prezzo) {
+    SCELTE[getIndexScelte(id)].FasciaOraria = prezzo;
+}
+
+function getIndexScelte(id) {
+    let count = -1,
+        indice = -1;
+    do {
+        count++;
+        if (SCELTE[count].ID == id) {
+            indice = count;
+        }
+    } while (count < SCELTE.length && indice == -1);
+    return indice;
 }
