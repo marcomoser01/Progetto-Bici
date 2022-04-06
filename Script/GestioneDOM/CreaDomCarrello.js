@@ -1,4 +1,4 @@
-import { GetCarrello } from './GestioneScelte.js';
+import { GetCarrello } from '../GestioneScelte.js';
 
 let CARRELLO;
 let SCELTE = [];

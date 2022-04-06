@@ -2,29 +2,30 @@ import { ConstructorDati } from '../ClassDati.js';
 
 
 let _DATI;
+let raccoltaFunzioni;
 
 
 export function uploadDati(dati) {
     _DATI = dati;
-    setDatiFunction();
-    ConstructorDati(_DATI);
+    raccoltaFunzioni = {};
+    setRaccoltaFunzioni();
+    ConstructorDati(raccoltaFunzioni);
 }
 
-
-function setDatiFunction() {
-    _DATI.toString = datiToString;
-    _DATI.getAllCategorie = getAllCategorie;
-    _DATI.getAllBiciclette = getAllBiciclette;
-    _DATI.getCategoria = getCategoria;
-    _DATI.findIndexBike = findIndexBike;
-    _DATI.getIndiciBicicletta = getIndiciBicicletta;
-    _DATI.getBikeOfCategory = getBikeOfCategory;
-    _DATI.getBiciclettaByID = getBiciclettaByID;
-    _DATI.getPrice = getPrice;
-    _DATI.setAffitta = setAffitta;
-    _DATI.changeBici = changeBici;
-    _DATI.isAffittata = isAffittata;
-    _DATI.getStatusAffittate = getStatusAffittate;
+function setRaccoltaFunzioni() {
+    raccoltaFunzioni.toString = datiToString;
+    raccoltaFunzioni.getAllCategorie = getAllCategorie;
+    raccoltaFunzioni.getAllBiciclette = getAllBiciclette;
+    raccoltaFunzioni.getCategoria = getCategoria;
+    raccoltaFunzioni.findIndexBike = findIndexBike;
+    raccoltaFunzioni.getIndiciBicicletta = getIndiciBicicletta;
+    raccoltaFunzioni.getBikeOfCategory = getBikeOfCategory;
+    raccoltaFunzioni.getBiciclettaByID = getBiciclettaByID;
+    raccoltaFunzioni.getPrice = getPrice;
+    raccoltaFunzioni.setAffittata = setAffittata;
+    raccoltaFunzioni.changeBici = changeBici;
+    raccoltaFunzioni.isAffittata = isAffittata;
+    raccoltaFunzioni.getStatusAffittate = getStatusAffittate;
 }
 
 
@@ -229,7 +230,7 @@ function isAffittata(id) {
     @param valore che si vuole dare al parametro Affittata
     @return restituisce true se il parametro viene modificato, false se il valore di Affittata era già quello di Affitta
 */
-function setAffitta(id, Affitta) {
+function setAffittata(id, Affitta) {
     let indici = getIndiciBicicletta(id),
         risultato = false;
 
@@ -287,7 +288,6 @@ function getStatusAffittate() {
 
     return risultato;
 }
-
 
 
 

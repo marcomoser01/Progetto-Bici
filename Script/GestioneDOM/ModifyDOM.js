@@ -1,8 +1,8 @@
 //Devo gestire che le bici che sono già presenti in carrello vengano già in grigio
 
 export { CreaDivMenu, CambiaScalaGrigi }
-import { IsAffittata } from './ClassDati.js';
-import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello, pullCarrello } from './GestioneScelte.js';
+import { IsAffittata } from '../ClassDati.js';
+import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello, pullCarrello } from '../GestioneScelte.js';
 
 
 
