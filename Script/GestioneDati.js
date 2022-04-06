@@ -1,3 +1,6 @@
+//Devo vedere di trasportare queste funzioni in ClassDati, oppure riuscire a dividerle meglio concettualmente
+
+
 export { AggiornaMenu, GetSingolaBiciByID, GetPrice, SetAffittata }
 import { CambiaScalaGrigi } from './ModifyDOM.js';
 import * as ClassDati from './ClassDati.js';

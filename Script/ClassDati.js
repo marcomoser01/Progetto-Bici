@@ -1,37 +1,12 @@
-let DATI = [];
+let _DATI = [];
 
 export function ConstructorDati(dati) {
-    DATI = dati;
-    DATI.toString = DatiToString();
+    _DATI = dati;
+    console.log(_DATI);
 }
 
-/*
-    Definisco la funzione che poi verrà caricata come parametro dei dati
-*/
-function DatiToString() {
-    let s = "";
-    for (let i = 0; i < DATI.length; i++) {
-        s += "Categoria: " + DATI[i].Categoria + "\n";
-        for (let k = 0; k < DATI[i].Biciclette.length; k++) {
-            s +=
-                "ID: " +
-                DATI[i].Biciclette[k].ID +
-                "\tModello: " +
-                DATI[i].Biciclette[k].Modello;
-        }
-    }
-    return s;
-}
-
-/*
-    Restituisce le categorie presenti nell'array
-*/
-export function GetCategorie() {
-    let risultato = [];
-    for (let item of DATI.Categoria) {
-        risultato.push(item);
-    }
-    return risultato;
+export function toString() {
+    return _DATI.toString();
 }
 
 /*
@@ -44,8 +19,8 @@ function GetIndexCategoriaByStringName(nomeCategoria) {
     let index = 0,
         trovata = false;
     do {
-        (DATI[index].Categoria == nomeCategoria) ? trovata = true: index++;
-    } while (index < DATI.length && !trovata);
+        (_DATI[index].Categoria == nomeCategoria) ? trovata = true: index++;
+    } while (index < _DATI.length && !trovata);
     (!trovata) ? index = -1: null;
     return index;
 }
@@ -60,8 +35,8 @@ export function GetIndexCategoria(ID) {
     let index = 0,
         trovata = false;
     do {
-        (IsInQuestaCategoria(DATI[index].Biciclette, ID)) ? trovata = true: index++;
-    } while (index < DATI.length && !trovata);
+        (IsInQuestaCategoria(_DATI[index].Biciclette, ID)) ? trovata = true: index++;
+    } while (index < _DATI.length && !trovata);
     (!trovata) ? index = -1: null;
     return index;
 }
@@ -73,7 +48,7 @@ export function GetIndexCategoria(ID) {
     @return restituisce una stringa contenete il nome della categoria
 */
 export function GetNameCategoryByIndex(ID) {
-    return DATI[ID].Categoria;
+    return _DATI[ID].Categoria;
 }
 
 /*
@@ -117,38 +92,8 @@ function FindIndexBike(biciclette, ID) {
 function GetIndici(ID) {
     let indici = [];
     indici.push(GetIndexCategoria(ID));
-    indici.push(FindIndexBike(DATI[indici[0]].Biciclette, ID));
+    indici.push(FindIndexBike(_DATI[indici[0]].Biciclette, ID));
     return indici;
-}
-
-/*
-    Restiruisce tutte le biciclette presenti
-
-    @return restituisce un array con tutte le bici presenti nei dati
-*/
-export function GetAllBici() {
-    let risultato = [];
-    for (let categ of DATI) {
-        for (let bici of categ.Biciclette) {
-            risultato.push(bici);
-        }
-    }
-    return risultato;
-}
-
-/*
-    Prendendo in ingresso il nome di una categoria mi restituisce le biciclette di quella categoria senza l'ID
-
-    @param nome della categoria di cui si vuole avere le bici
-    @return restituisce un array di oggetti bici
-*/
-export function GetBiciOfCategory(nomeCategoria) {
-    let risultato = [];
-    for (let item of DATI[GetIndexCategoriaByStringName(nomeCategoria)].Biciclette) {
-        delete item.ID;
-        risultato.push(item);
-    }
-    return risultato;
 }
 
 /*
@@ -161,7 +106,7 @@ export function GetBiciByID(ID) {
     let risultato = false,
         indici = GetIndici(ID);
     if (indici[0] != -1) {
-        (indici[1] != -1) ? risultato = DATI[indici[0]].Biciclette[indici[1]]: null;
+        (indici[1] != -1) ? risultato = _DATI[indici[0]].Biciclette[indici[1]]: null;
     }
     return risultato;
 }
@@ -175,7 +120,7 @@ export function GetBiciByID(ID) {
 export function GetPrice(categoria) {
     let risultato = false,
         indiceCategoria = GetIndexCategoriaByStringName(categoria);
-    (indiceCategoria != -1) ? risultato = DATI[indiceCategoria].Prezzi: null;
+    (indiceCategoria != -1) ? risultato = _DATI[indiceCategoria].Prezzi: null;
     return risultato;
 }
 
@@ -189,8 +134,8 @@ export function GetPrice(categoria) {
 export function SetAffitta(ID, Affitta) {
     let indici = GetIndici(ID),
         risultato = false;
-    if (DATI[indici[0]].Biciclette[indici[1]].Affitta != Affitta) {
-        DATI[indici[0]].Biciclette[indici[1]].Affitta = Affitta;
+    if (_DATI[indici[0]].Biciclette[indici[1]].Affitta != Affitta) {
+        _DATI[indici[0]].Biciclette[indici[1]].Affitta = Affitta;
         risultato = true;
     }
     return risultato;
@@ -198,7 +143,7 @@ export function SetAffitta(ID, Affitta) {
 
 export function ChangeBici(Bici) {
     let indici = GetIndici(Bici.ID);
-    DATI[indici[0]].Biciclette[indici[1]] = Bici;
+    _DATI[indici[0]].Biciclette[indici[1]] = Bici;
 }
 
 /*
@@ -209,9 +154,12 @@ export function ChangeBici(Bici) {
 export function IsAffittata(ID) {
     let indici = GetIndici(ID),
         risultato = false;
-    (DATI[indici[0]].Biciclette[indici[1]].Affitta) ? risultato = true: null;
+    (_DATI[indici[0]].Biciclette[indici[1]].Affitta) ? risultato = true: null;
     return risultato;
 }
+
+
+
 
 /*
     Restituisce un array contenente l'ID e il valore di Affittata
@@ -220,7 +168,7 @@ export function IsAffittata(ID) {
 */
 export function GetStatusAffittate() {
     let risultato = [];
-    for (let cat of DATI) {
+    for (let cat of _DATI) {
         for (let bici of cat.Biciclette) {
             if (bici.Affitta) {
                 risultato.push({

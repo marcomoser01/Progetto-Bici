@@ -1,13 +1,15 @@
-import * as DOM from "./ModifyDOM.js";
-import { ConstructorDati } from "./ClassDati.js";
+import * as DOM from "../ModifyDOM.js";
+import { ConstructorDati } from "../ClassDati.js";
+import { uploadDati } from "./CaricaFuzioniDati.js";
 
-let dati = [],
+
+let _DATI = [],
     _pathBici = "../Dati/bici.json",
     _pathPrezzi = "../Dati/prezzi.json";
 
 
 /*
-    Prende i dati dai file json e li carica in dati. Successivamente manda i dati a GestioneDati e fa creare il menu.
+    Prende i dati dai file json e li carica in _DATI. Successivamente manda i dati a GestioneDati e fa creare il menu.
 */
 $(document).ready(function() {
     $.ajax({
@@ -24,8 +26,12 @@ $(document).ready(function() {
                     CaricaPrezzi(prezziJson);
                 },
                 complete: function() {
-                    ConstructorDati(dati);
-                    DOM.CreaDivMenu(dati);
+                    uploadDati(_DATI);
+                    /*
+                    SetDatiFunction();
+                    ConstructorDati(_DATI);
+                    DOM.CreaDivMenu(_DATI);
+                    */
                 }
             });
         }
@@ -40,8 +46,8 @@ $(document).ready(function() {
 */
 function CategoriaEsistente(categoria) {
     let risultato = -1;
-    for (let i = 0; i < dati.length; i++) {
-        if (dati[i].Categoria.toUpperCase() == categoria.toUpperCase()) {
+    for (let i = 0; i < _DATI.length; i++) {
+        if (_DATI[i].Categoria.toUpperCase() == categoria.toUpperCase()) {
             risultato = i;
             break;
         }
@@ -50,7 +56,7 @@ function CategoriaEsistente(categoria) {
 }
 
 /*
-    Serve per fare il push delle biciclette da il file json all'array dati
+    Serve per fare il push delle biciclette da il file json all'array _DATI
     @json --> Stringa contenente i dati delle biciclette
 */
 function CaricaBici(biciJson) {
@@ -59,7 +65,7 @@ function CaricaBici(biciJson) {
         indiceCategoria = CategoriaEsistente(item.Categoria);
         oggetto = CreaObjectBici(indiceCategoria, item);
 
-        (indiceCategoria == -1) ? dati.push(oggetto): dati[indiceCategoria].Biciclette.push(oggetto);
+        (indiceCategoria == -1) ? _DATI.push(oggetto): _DATI[indiceCategoria].Biciclette.push(oggetto);
     }
 }
 
@@ -93,7 +99,7 @@ function CreaObjectBici(indiceCategoria, item) {
 }
 
 /*
-    Serve per fare il push dei prezzi da il file json all'array dati
+    Serve per fare il push dei prezzi da il file json all'array _DATI
     @json --> Stringa contenente i dati dei prezzi
 */
 function CaricaPrezzi(prezzoJson) {
@@ -102,7 +108,7 @@ function CaricaPrezzi(prezzoJson) {
         indiceCategoria = CategoriaEsistente(item.Categoria);
         oggetto = CreaObjectPrezzo(indiceCategoria, item);
 
-        (indiceCategoria == -1) ? dati.push(oggetto): dati[indiceCategoria].Prezzi = oggetto;
+        (indiceCategoria == -1) ? _DATI.push(oggetto): _DATI[indiceCategoria].Prezzi = oggetto;
     }
 }
 
@@ -126,7 +132,7 @@ function CreaObjectPrezzo(indiceCategoria, item) {
             }
         };
     } else {
-        dati[indiceCategoria].Prezzi
+        _DATI[indiceCategoria].Prezzi
         prezzo = {
             HalfDay: item.HalfDay,
             FullDay: item.FullDay,
