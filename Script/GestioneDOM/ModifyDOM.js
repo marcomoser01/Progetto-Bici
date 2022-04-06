@@ -1,8 +1,8 @@
 //Devo gestire che le bici che sono già presenti in carrello vengano già in grigio
 
-export { CreaDivMenu, CambiaScalaGrigi }
-import { IsAffittata } from '../ClassDati.js';
-import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello, pullCarrello } from '../GestioneScelte.js';
+export { creaDivMenu, CambiaScalaGrigi }
+import { callFunction as callFunctionDati } from './../ClassDati.js';
+import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello, pullCarrelloLocalStorage } from '../GestioneInterazione.js';
 
 
 
@@ -10,8 +10,8 @@ import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello, pullCarrell
     Modifica il DOM della pagina inserendo il menù, caricato dinamicamento da un file json
     @dati --> dati delle biciclette per poter creare il menù
 */
-function CreaDivMenu(dati) {
-    pullCarrello();
+function creaDivMenu(dati) {
+    pullCarrelloLocalStorage();
     let divCatalogo = document.getElementById('div-catalogo');
 
     for (let item of dati) {
@@ -155,7 +155,7 @@ function CreaDOMModello(bicicletta) {
 
 
 function ClickBicicletta(id) {
-    if (IsAffittata(id)) {
+    if (callFunctionDati('isAffittata', id)) {
         alert("La bici è già stata prenotata");
     } else {
         let indiceElemento = IndiceBiciInCarrello(id);
@@ -177,7 +177,7 @@ function MouseoverBicicletta(id) {
 
 function MouseoutBicicletta(id) {
     if (ImgIsGray(id)) {
-        if (!IsAffittata(id) && IndiceBiciInCarrello(id) == -1) {
+        if (!callFunctionDati('isAffittata', id) && IndiceBiciInCarrello(id) == -1) {
             CambiaScalaGrigi(id, 0);
         }
     }
@@ -193,4 +193,23 @@ function CambiaScalaGrigi(id, value) {
 function ImgIsGray(id) {
     let DOMimmagine = document.getElementById('id-img-' + id);
     return (DOMimmagine.style.filter == "grayscale(1)") ? true : false;
+}
+
+
+
+
+
+
+
+
+
+/*
+    Controlla che le bici che sono prenota siano grige e quelle non prenotate siano colorate
+*/
+export function AggiornaMenu() {
+    let satusAffittate = callFunctionDati('getStatusAffittate');
+    
+    for (let item of satusAffittate) {
+        CambiaScalaGrigi(item.ID, item.Valore);
+    }
 }

@@ -1,4 +1,5 @@
-import { GetCarrello } from '../GestioneScelte.js';
+import { callFunction as callFunctionDati } from '../ClassDati.js';
+import { GetCarrello } from '../GestioneInterazione.js';
 
 let CARRELLO;
 let SCELTE = [];
@@ -8,6 +9,10 @@ export function creaDomCarrello() {
     hiddenPrenota();
     setCarrelloDati();
     removeAllChildNodes("div-catalogo");
+
+
+
+
     creaDivCarrello();
     localStorage.setItem('carrello-bici', JSON.stringify(SCELTE));
 }
@@ -41,7 +46,6 @@ function removeAllChildNodes(id) {
 function creaDivCarrello() {
     let divCatalogo = document.getElementById('div-catalogo');
     let label;
-
     for (let item of CARRELLO) {
         SCELTE.push({
             ID: item.ID,
@@ -83,15 +87,15 @@ function creaDivBiciclettaSingola(bicicletta) {
 }
 
 function creaRadioBottonPrice(bicicletta) {
-    console.log(bicicletta);
-    let Form = document.createElement('form');
+    let Form = document.createElement('form'),
+        fasciaPrezzi = callFunctionDati('getPrice', null, bicicletta.ID);
 
-    for (let item of Object.keys(bicicletta.Prezzi)) {
-        Form.appendChild(createDivRadio(bicicletta.ID, [item, bicicletta.Prezzi[item]]));
+    for (let item of Object.keys(fasciaPrezzi)) {
+        Form.appendChild(createDivRadio(bicicletta.ID, [item, fasciaPrezzi[item]]));
     }
-    Form.setAttribute('id', 'id-RadioButton-' + bicicletta.ID)
-    return Form;
+    Form.setAttribute('id', 'id-RadioButton-' + bicicletta.ID);
 
+    return Form;
 }
 
 function createDivRadio(id, prezzo) {

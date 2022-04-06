@@ -1,5 +1,3 @@
-import * as DOM from "../ModifyDOM.js";
-import { ConstructorDati } from "../ClassDati.js";
 import { uploadDati } from "./CaricaFuzioniDati.js";
 
 
@@ -27,11 +25,6 @@ $(document).ready(function() {
                 },
                 complete: function() {
                     uploadDati(_DATI);
-                    /*
-                    SetDatiFunction();
-                    ConstructorDati(_DATI);
-                    DOM.CreaDivMenu(_DATI);
-                    */
                 }
             });
         }

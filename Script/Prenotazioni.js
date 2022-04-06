@@ -1,4 +1,5 @@
-import * as GestioneDati from './GestioneDati.js';
+import { callFunction as callFunctionDati } from './ClassDati.js';
+
 
 
 
@@ -16,7 +17,7 @@ export function PrenotaBici(scelte) {
 
         do {
             if (PrenotaBiciSingola(scelte[count])) {
-                biciPrenotate.push(GestioneDati.GetSingolaBiciByID(scelte[count]));
+                biciPrenotate.push(callFunctionDati('getBiciclettaByID', scelte[count]));
                 prenotate = true;
             } else {
                 prenotate = false;
@@ -40,7 +41,7 @@ export function PrenotaBici(scelte) {
 */
 function PrenotaBiciSingola(IDbicicletta) {
     let affittata;
-    (GestioneDati.SetAffittata(IDbicicletta, true)) ? affittata = true: affittata = false;
+    (callFunctionDati('setAffittata', IDbicicletta, true)) ? affittata = true : affittata = false;
     return affittata;
 }
 
@@ -60,6 +61,6 @@ function RestituisciBici(biciPrenotate) {
 */
 function RestituisciBiciSingola(IDbicicletta) {
     let restituita;
-    (GestioneDati.SetAffittata(IDbicicletta, false)) ? restituita = true: restituita = false;
+    (callFunctionDati('setAffittata', IDbicicletta, true)) ? restituita = true: restituita = false;
     return restituita;
 }

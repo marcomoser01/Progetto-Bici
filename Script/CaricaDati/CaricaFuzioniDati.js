@@ -4,6 +4,9 @@ import { ConstructorDati } from '../ClassDati.js';
 let _DATI;
 let raccoltaFunzioni;
 
+export function getDati() {
+    return _DATI;
+}
 
 export function uploadDati(dati) {
     _DATI = dati;
@@ -26,6 +29,7 @@ function setRaccoltaFunzioni() {
     raccoltaFunzioni.changeBici = changeBici;
     raccoltaFunzioni.isAffittata = isAffittata;
     raccoltaFunzioni.getStatusAffittate = getStatusAffittate;
+    raccoltaFunzioni.calcolaPrezzoTotale = calcolaPrezzoTotale;
 }
 
 
@@ -197,12 +201,19 @@ function getBiciclettaByID(id) {
 /*
     Restituisce un oggetto contenente i prezzi di una determinata categoria
 
-    @param nome della categoria
+    @param --> nome della categoria. Mettere null se la ricerca viene fatta tramite id
+    @param id --> id della bicicletta di cui si vuole sapere la fascia prezzi. Mettere null se la ricerca viene fatta tramite categoria
     @return restituisce un oggetto contenete i prezzi, altrimenti false
 */
-function getPrice(categoria) {
+function getPrice(categoria, id = null) {
     let risultato = false,
-        indiceCategoria = getCategoria(null, categoria);
+        indiceCategoria;
+
+    if(categoria != null) {
+        indiceCategoria = getCategoria(null, categoria, 'indice');
+    } else {
+        indiceCategoria = getCategoria(id, null, 'indice');
+    }
 
     (indiceCategoria != -1) ? risultato = _DATI[indiceCategoria].Prezzi: null;
 
@@ -288,6 +299,25 @@ function getStatusAffittate() {
 
     return risultato;
 }
+
+/*
+    Calcola il prezzo totale
+
+    @param arrayBiciclette --> array delle biciclette di cui si vuole calcolare il prezzo totale
+    @param fasciaOraria --> fascia oraria del prezzo
+    @return restituisce il costo totale 
+*/
+function calcolaPrezzoTotale(arrayBiciclette, fasciaOraria) {
+    let risultato = 0;
+
+    for(let item of arrayBiciclette) {
+        risultato += getPrice(getCategoria(item.ID, null, 'nome'))[fasciaOraria];
+    }
+
+    return risultato;
+}
+
+
 
 
 
