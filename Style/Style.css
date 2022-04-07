@@ -81,3 +81,29 @@ img {
     letter-spacing: .015em;
     line-height: 1.5em;
 }
+
+#BottoneCarrello {
+    margin-left: 25%;
+}
+
+#BottoneCarrello > svg {
+    height: 100px;
+    width: 100px;
+}
+
+#BottoneHome {
+    margin-right: 25%;
+}
+
+#BottoneHome > svg {
+    height: 100px;
+    width: 100px;
+}
+
+
+.containerBottone {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 5%;
+}

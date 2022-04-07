@@ -303,15 +303,15 @@ function getStatusAffittate() {
 /*
     Calcola il prezzo totale
 
-    @param arrayBiciclette --> array delle biciclette di cui si vuole calcolare il prezzo totale
-    @param fasciaOraria --> fascia oraria del prezzo
+    @param arrayBiciclette --> array delle biciclette di cui si vuole calcolare il prezzo totale.
+                                Ogni bicicletta deve contenere la fascia di prezzo come parametro
     @return restituisce il costo totale 
 */
-function calcolaPrezzoTotale(arrayBiciclette, fasciaOraria) {
+function calcolaPrezzoTotale(arrayBiciclette) {
     let risultato = 0;
 
     for(let item of arrayBiciclette) {
-        risultato += getPrice(getCategoria(item.ID, null, 'nome'))[fasciaOraria];
+        risultato += getPrice(getCategoria(item.ID, null, 'nome'))[item.FasciaOraria];
     }
 
     return risultato;

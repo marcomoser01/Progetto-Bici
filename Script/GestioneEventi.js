@@ -1,6 +1,11 @@
-import { Prenota, pushCarrelloLocalStorage } from './GestioneInterazione.js';
-import * as DomCarrello from './GestioneDOM/CreaDomCarrello.js';
+import { callFunction as callFunctionInterazioni } from './GestioneInterazione.js';
+import { creaDomCarrello } from './GestioneDOM/CreaDomCarrello.js';
+import { callCreaDivMenu } from './ClassDati.js';
 
-$("#BottonePrenota").click(Prenota);
-$("#BottoneCarrello").click(DomCarrello.creaDomCarrello);
-$("#BottoneAggiungiCarrello").click(pushCarrelloLocalStorage);
+
+let prenota = () => { return callFunctionInterazioni('prenota') }
+
+
+$("#BottonePrenota").click(prenota);
+$("#BottoneCarrello").click(creaDomCarrello);
+$("#BottoneHome").click(callCreaDivMenu);

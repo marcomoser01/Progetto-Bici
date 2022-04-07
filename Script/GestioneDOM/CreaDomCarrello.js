@@ -1,27 +1,28 @@
-import { callFunction as callFunctionDati } from '../ClassDati.js';
-import { GetCarrello } from '../GestioneInterazione.js';
+import { callFunction as callFunctionInterazioni } from '../GestioneInterazione.js';
 import { callFunction as callFunctionNodeElement } from './GeneraNodeElement.js';
+import { callFunction as callFunctionClassDati } from '../ClassDati.js';
 
 let CARRELLO;
-let SCELTE = [];
+let localStorageKey = 'carrello-biciclette';
 
 export function creaDomCarrello() {
-    let storage = localStorage.getItem("carrello-bici");
-    callFunctionNodeElement('hiddenPrenota');
+    CARRELLO = localStorage.getItem(localStorageKey);
+    if(CARRELLO == null) {
+        CARRELLO = [];
+    }
+    callFunctionNodeElement('hiddenPrenota', false);
     setCarrelloDati();
     callFunctionNodeElement('removeAllChildNodes', "div-catalogo");
 
-
-
-
     creaDivCarrello();
-    localStorage.setItem('carrello-bici', JSON.stringify(SCELTE));
+    mostraPrezzoTotale();
+    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }
 
 
 
 function setCarrelloDati() {
-    CARRELLO = GetCarrello();
+    CARRELLO = callFunctionInterazioni('getCarrello');
 }
 
 /*
@@ -32,10 +33,6 @@ function creaDivCarrello() {
     let divCatalogo = document.getElementById('div-catalogo');
     let label;
     for (let item of CARRELLO) {
-        SCELTE.push({
-            ID: item.ID,
-            FasciaOraria: 'HalfDay'
-        });
         label = document.createElement('label');
         label.appendChild(creaRowCarrello(item));
         divCatalogo.insertBefore(label, null);
@@ -53,6 +50,17 @@ function creaRowCarrello(item) {
     divRow.setAttribute('class', 'div-RowGrid div-RowCarrello');
 
     divRow.appendChild(callFunctionNodeElement('creaDivBiciclettaSingola', item, false));
-    divRow.appendChild(callFunctionNodeElement('creaRadioBottonPrice', item, SCELTE));
+    divRow.appendChild(callFunctionNodeElement('creaRadioBottonPrice', item, CARRELLO));
     return divRow;
+}
+
+export function changeCarrello(carrello) {
+    CARRELLO = carrello;
+    mostraPrezzoTotale();
+    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
+}
+
+function mostraPrezzoTotale() {
+    let paragrafo = document.getElementById('p-PrezzoTotale');
+    paragrafo.innerText = callFunctionClassDati('calcolaPrezzoTotale', CARRELLO) + '€';
 }

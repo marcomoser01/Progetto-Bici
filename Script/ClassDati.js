@@ -5,7 +5,10 @@ let _DATI = [];
 
 export function ConstructorDati(dati) {
     _DATI = dati;
-    console.log(getDati());
+    callCreaDivMenu();
+}
+
+export function callCreaDivMenu() {
     creaDivMenu(getDati());
 }
 

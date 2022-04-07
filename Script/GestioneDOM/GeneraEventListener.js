@@ -1,6 +1,7 @@
 import { callFunction as callFunctionNodeElement } from './GeneraNodeElement.js';
 import { callFunction as callFunctionDati } from './../ClassDati.js';
-import { IndiceBiciInCarrello, AddElementInCarrello, SpliceCarrello } from '../GestioneInterazione.js';
+import { callFunction as callFunctionInterazioni } from '../GestioneInterazione.js';
+import { changeCarrello } from './CreaDomCarrello.js';
 
 export function callFunction(nomeFunzione, ...arg) {
     let risultato;
@@ -18,12 +19,12 @@ function clickBicicletta(id) {
     if (callFunctionDati('isAffittata', id)) {
         alert("La bici è già stata prenotata");
     } else {
-        let indiceElemento = IndiceBiciInCarrello(id);
+        let indiceElemento = callFunctionInterazioni('indiceBiciInCarrello', id);
         if (indiceElemento == -1) {
-            AddElementInCarrello(id);
+            callFunctionInterazioni('addElementInCarrello', id);
             callFunctionNodeElement('cambiaScalaGrigi', id, 1);
         } else {
-            SpliceCarrello(indiceElemento);
+            callFunctionInterazioni('spliceCarrello', indiceElemento);
             callFunctionNodeElement('cambiaScalaGrigi', id, 0);
         }
     }
@@ -37,7 +38,7 @@ function mouseoverBicicletta(id) {
 
 function mouseoutBicicletta(id) {
     if (imgIsGray(id)) {
-        if (!callFunctionDati('isAffittata', id) && IndiceBiciInCarrello(id) == -1) {
+        if (!callFunctionDati('isAffittata', id) && callFunctionInterazioni('indiceBiciInCarrello', id) == -1) {
             callFunctionNodeElement('cambiaScalaGrigi', id, 0);
         }
     }
@@ -48,18 +49,19 @@ function imgIsGray(id) {
     return (DOMimmagine.style.filter == "grayscale(1)") ? true : false;
 }
 
-function onchangeRadioButton(id, prezzo, scelte) {
-    scelte[getIndexScelte(id, scelte)].FasciaOraria = prezzo;
+function onchangeRadioButton(id, prezzo, CARRELLO) {
+    CARRELLO[getIndexScelte(id, CARRELLO)].FasciaOraria = prezzo;
+    changeCarrello(CARRELLO);
 }
 
-function getIndexScelte(id, scelte) {
+function getIndexScelte(id, CARRELLO) {
     let count = -1,
         indice = -1;
     do {
         count++;
-        if (scelte[count].ID == id) {
+        if (CARRELLO[count].ID == id) {
             indice = count;
         }
-    } while (count < SCELTE.length && indice == -1);
+    } while (count < CARRELLO.length && indice == -1);
     return indice;
 }

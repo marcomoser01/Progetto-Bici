@@ -1,5 +1,4 @@
-//Devo spostare in questo file tutte le funzioni comuni tra CreaDomCarrello e ModifyDom
-import { IndiceBiciInCarrello } from '../GestioneInterazione.js';
+import { callFunction as callFunctionInterazioni } from '../GestioneInterazione.js';
 import { callFunction as callFunctionDati } from './../ClassDati.js';
 import { callFunction as callFunctionEventListener } from './GeneraEventListener.js';
 
@@ -46,7 +45,7 @@ function CreaDOMImmagine(bicicletta, grayScale = true) {
     img.setAttribute('class', 'img-biciletta');
     img.setAttribute('id', 'id-img-' + bicicletta.ID);
     img.src = bicicletta.Immagine;
-    if (IndiceBiciInCarrello(bicicletta.ID) == -1 || !grayScale) {
+    if (callFunctionInterazioni('indiceBiciInCarrello', bicicletta.ID) == -1 || !grayScale) {
         img.style.filter = "grayscale(0)";
     } else {
         img.style.filter = "grayscale(1)";
@@ -104,14 +103,22 @@ function cambiaScalaGrigi(id, value) {
 
 }
 
-function hiddenPrenota() {
-    let prenota = document.getElementById('BottonePrenota');
-    if (prenota.getAttribute("hidden")) {
-        prenota.removeAttribute("hidden");
-    } else {
-        prenota.setAttribute("hidden", "hidden");
-    }
+/*
+    La funzione fa l'hidden sul bottone prenota in base al valore in ingresso
 
+    @param value --> passare true se si vuole nascondere il bottone, oppure false se lo si volesse rendere visibile
+*/
+function hiddenPrenota(value) {
+    let prenota = document.getElementById('BottonePrenota'),
+        pCostoTotale = document.getElementById('p-PrezzoTotale');
+    
+    if (!value) {
+        prenota.removeAttribute('hidden');
+        pCostoTotale.removeAttribute('hidden');
+    } else {
+        prenota.setAttribute('hidden', 'hidden');
+        pCostoTotale.setAttribute('hidden', 'hidden');
+    }
 }
 
 function removeAllChildNodes(id) {
@@ -121,29 +128,45 @@ function removeAllChildNodes(id) {
     }
 }
 
-function creaRadioBottonPrice(bicicletta, scelte) {
+function creaRadioBottonPrice(bicicletta, CARRELLO) {
     let Form = document.createElement('form'),
         fasciaPrezzi = callFunctionDati('getPrice', null, bicicletta.ID);
 
     for (let item of Object.keys(fasciaPrezzi)) {
-        Form.appendChild(createDivRadio(bicicletta.ID, [item, fasciaPrezzi[item]], scelte));
+        Form.appendChild(createDivRadio(bicicletta, [item, fasciaPrezzi[item]], CARRELLO));
     }
     Form.setAttribute('id', 'id-RadioButton-' + bicicletta.ID);
 
     return Form;
 }
 
-function createDivRadio(id, prezzo, scelte) {
+function createDivRadio(bicicletta, prezzo, CARRELLO) {
     let label = document.createElement('label');
     let input = document.createElement('input');
 
     input.setAttribute('type', 'radio');
     input.setAttribute('class', 'input-radio');
-    input.setAttribute('id', 'radio-ID-' + id + '-Prezzo-' + prezzo[0]);
+    input.setAttribute('id', 'radio-ID-' + bicicletta.ID + '-Prezzo-' + prezzo[0]);
     input.setAttribute('name', 'prezzo');
-    input.addEventListener('change', () => { callFunctionEventListener('onchangeRadioButton', id, prezzo[0], scelte) });
+    input.addEventListener('change', () => { callFunctionEventListener('onchangeRadioButton', bicicletta.ID, prezzo[0], CARRELLO) });
+
+    if(prezzo[0] == bicicletta.FasciaOraria) {
+        input.setAttribute('checked', true);
+    }
+
     label.appendChild(input);
     label.appendChild(document.createTextNode(prezzo[0] + ":\t" + prezzo[1]));
 
     return label;
+}
+
+/*
+    Controlla che le bici che sono prenota siano grige e quelle non prenotate siano colorate
+*/
+function aggiornaMenu() {
+    let satusAffittate = callFunctionDati('getStatusAffittate');
+
+    for (let item of satusAffittate) {
+        cambiaScalaGrigi(item.ID, item.Valore);
+    }
 }

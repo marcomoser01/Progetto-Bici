@@ -1,5 +1,4 @@
-import { callFunction as callFunctionDati } from './../ClassDati.js';
-import { pullCarrelloLocalStorage } from '../GestioneInterazione.js';
+import { callFunction as callFunctionInterazioni } from '../GestioneInterazione.js';
 import { callFunction as callFunctionNodeElement } from './GeneraNodeElement.js';
 
 
@@ -9,7 +8,9 @@ import { callFunction as callFunctionNodeElement } from './GeneraNodeElement.js'
     @dati --> dati delle biciclette per poter creare il menù
 */
 export function creaDivMenu(dati) {
-    pullCarrelloLocalStorage();
+    callFunctionNodeElement('removeAllChildNodes', "div-catalogo");
+    callFunctionNodeElement('hiddenPrenota', true);
+    callFunctionInterazioni('pullCarrelloLocalStorage');
     let divCatalogo = document.getElementById('div-catalogo');
 
     for (let item of dati) {
@@ -70,19 +71,4 @@ function CreaDivBiciclette(biciclette, nRow) {
         divRow = document.createElement('div');
     }
     return divBiciclette;
-}
-
-
-
-
-
-/*
-    Controlla che le bici che sono prenota siano grige e quelle non prenotate siano colorate
-*/
-export function AggiornaMenu() {
-    let satusAffittate = callFunctionDati('getStatusAffittate');
-
-    for (let item of satusAffittate) {
-        callFunctionNodeElement('cambiaScalaGrigi', item.ID, item.Valore);
-    }
 }

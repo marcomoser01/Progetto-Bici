@@ -1,52 +1,65 @@
-//Gestisci i click delle immagini come evento e non come onclick
-
-
-
-
-export { Prenota, GetCarrello }
-import { AggiornaMenu }from './GestioneDOM/ModifyDOM.js';
+import { callFunction as callFunctionNodeElement } from './GestioneDOM/GeneraNodeElement.js';
 import * as Prenotazioni from './Prenotazioni.js';
 import { callFunction as callFunctionDati } from './ClassDati.js';
+
+
 
 let CARRELLO = [];
 let localStorageKey = 'carrello-biciclette';
 
 
+export function callFunction(nomeFunzione, ...arg) {
+    let risultato;
+    try {
+        let funzione = eval(nomeFunzione);
+        risultato = funzione(...arg);
+    } catch (e) {
+        risultato = e;
+    }
+    return risultato;
+}
+
+
+
 /*
     Prende, se presenti, il carrello dal localStorage
 */
-export function pullCarrelloLocalStorage() {
+function pullCarrelloLocalStorage() {
     let localStorageString = localStorage.getItem(localStorageKey);
 
     if (localStorageString != null) {
         CARRELLO = JSON.parse(localStorageString);
     }
-    CARRELLO.forEach((bicicletta) => {
-        callFunctionDati('setAffittata', bicicletta.ID, true);
-    })
-}
-
-export function pushCarrelloLocalStorage() {
-    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }
 
 /*
     Mi dice se una bici è già stata seleziona
     @return restituisce o l'indice in cui si trova nell'array scelta, oppure -1
 */
-export function IndiceBiciInCarrello(id) {
+function indiceBiciInCarrello(id) {
+    CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
+    if(CARRELLO == null) {
+        CARRELLO = [];
+    }
+
     return callFunctionDati('findIndexBike', CARRELLO, id);
 }
 
-export function AddElementInCarrello(id) {
+function addElementInCarrello(id) {
+    CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
+    if(CARRELLO == null) {
+        CARRELLO = [];
+    }
     let dato = callFunctionDati('getBiciclettaByID', id);
 
     dato.FasciaOraria = 'HalfDay';
     CARRELLO.push(dato);
+    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }
 
-export function SpliceCarrello(indice) {
+function spliceCarrello(indice) {
     CARRELLO.splice(indice, 1);
+    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }
 
 
@@ -55,7 +68,7 @@ export function SpliceCarrello(indice) {
 /*
     Prenota le bici selezionate. Se non si fosse selezionata nessuna bicicletta visionerà un alert d'errore
 */
-function Prenota() {
+function prenota() {
     let prenotazione = Prenotazioni.PrenotaBici(CARRELLO);
     if (prenotazione == -1) {
         alert("Non è stata selezionata nessuna bicicletta, la invitiamo a selezionare delle biciclette");
@@ -66,9 +79,9 @@ function Prenota() {
     }
 
     CARRELLO = [];
-    AggiornaMenu();
+    callFunctionNodeElement('aggiornaMenu');
 }
 
-function GetCarrello() {
+function getCarrello() {
     return CARRELLO;
 }
