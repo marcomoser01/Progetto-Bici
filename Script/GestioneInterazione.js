@@ -38,7 +38,7 @@ function pullCarrelloLocalStorage() {
 */
 function indiceBiciInCarrello(id) {
     CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
-    if(CARRELLO == null) {
+    if (CARRELLO == null) {
         CARRELLO = [];
     }
 
@@ -47,7 +47,7 @@ function indiceBiciInCarrello(id) {
 
 function addElementInCarrello(id) {
     CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
-    if(CARRELLO == null) {
+    if (CARRELLO == null) {
         CARRELLO = [];
     }
     let dato = callFunctionDati('getBiciclettaByID', id);
@@ -75,7 +75,7 @@ function prenota() {
     } else if (!prenotazione) {
         alert("Le bici non sono state prenotate");
     } else {
-        alert("Le bici sono state prenotate per un costo totale di: " + callFunctionDati('calcolaPrezzoTotale', CARRELLO, 'HalfDay'));
+        alert("Le bici sono state prenotate per un costo totale di: " + callFunctionDati('calcolaPrezzoTotale', CARRELLO));
     }
 
     CARRELLO = [];

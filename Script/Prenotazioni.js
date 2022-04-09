@@ -13,6 +13,8 @@ export function PrenotaBici(scelte) {
     let prenotate = false,
         biciPrenotate = [],
         count = 0;
+
+
     try {
 
         do {
@@ -25,6 +27,7 @@ export function PrenotaBici(scelte) {
             count++;
 
         } while (prenotate && count < scelte.length);
+
     } catch (err) {
         (err instanceof TypeError) ? prenotate = -1: null;
     }
@@ -39,9 +42,11 @@ export function PrenotaBici(scelte) {
     Prenota se è possibile la bicicletta che è stata passata come parametro
     @return --> Restituisce true o false in pase all'avvenuta prenotazione oppure no
 */
-function PrenotaBiciSingola(IDbicicletta) {
+function PrenotaBiciSingola(Bicicletta) {
     let affittata;
-    (callFunctionDati('setAffittata', IDbicicletta, true)) ? affittata = true : affittata = false;
+    console.log(Bicicletta.ID);
+    (callFunctionDati('setAffittata', Bicicletta.ID, true)) ? affittata = true: affittata = false;
+
     return affittata;
 }
 
@@ -59,8 +64,8 @@ function RestituisciBici(biciPrenotate) {
     Il metodo serve per quando si è affitata una bicicletta e la si vuole restituire. Quindi va a settare a false il valore del parametro affittata
     @return Restituisce true o false in base al compimento della restituzione
 */
-function RestituisciBiciSingola(IDbicicletta) {
+function RestituisciBiciSingola(Bicicletta) {
     let restituita;
-    (callFunctionDati('setAffittata', IDbicicletta, true)) ? restituita = true: restituita = false;
+    (callFunctionDati('setAffittata', Bicicletta.ID, true)) ? restituita = true: restituita = false;
     return restituita;
 }

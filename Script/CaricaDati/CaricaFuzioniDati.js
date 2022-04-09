@@ -209,7 +209,7 @@ function getPrice(categoria, id = null) {
     let risultato = false,
         indiceCategoria;
 
-    if(categoria != null) {
+    if (categoria != null) {
         indiceCategoria = getCategoria(null, categoria, 'indice');
     } else {
         indiceCategoria = getCategoria(id, null, 'indice');
@@ -310,7 +310,7 @@ function getStatusAffittate() {
 function calcolaPrezzoTotale(arrayBiciclette) {
     let risultato = 0;
 
-    for(let item of arrayBiciclette) {
+    for (let item of arrayBiciclette) {
         risultato += getPrice(getCategoria(item.ID, null, 'nome'))[item.FasciaOraria];
     }
 
