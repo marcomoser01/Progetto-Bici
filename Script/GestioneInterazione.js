@@ -30,6 +30,8 @@ function pullCarrelloLocalStorage() {
     if (localStorageString != null) {
         CARRELLO = JSON.parse(localStorageString);
     }
+
+    controlloPrenotate();
 }
 
 /*
@@ -62,9 +64,6 @@ function spliceCarrello(indice) {
     localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }
 
-
-
-
 /*
     Prenota le bici selezionate. Se non si fosse selezionata nessuna bicicletta visionerà un alert d'errore
 */
@@ -84,4 +83,17 @@ function prenota() {
 
 function getCarrello() {
     return CARRELLO;
+}
+
+function controlloPrenotate() {
+    for (let item of callFunctionDati('getStatusAffittate')) {
+        if (item.Valore == 1) {
+            for (let car in CARRELLO) {
+                if (CARRELLO[car].ID == item.ID) {
+                    spliceCarrello(car);
+                }
+            }
+        }
+    }
+    console.log(CARRELLO);
 }
