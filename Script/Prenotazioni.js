@@ -44,7 +44,6 @@ export function PrenotaBici(scelte) {
 */
 function PrenotaBiciSingola(Bicicletta) {
     let affittata;
-    console.log(Bicicletta.ID);
     (callFunctionDati('setAffittata', Bicicletta.ID, true)) ? affittata = true: affittata = false;
 
     return affittata;
