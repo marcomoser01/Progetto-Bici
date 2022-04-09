@@ -30,6 +30,7 @@ function CreaParagrafiCategorie(categoria, tag = 'div') {
     let DOMCategoria,
         divContenitoreBiciclette;
 
+
     DOMCategoria = document.createElement(tag);
     DOMCategoria.setAttribute('class', tag + '-categorie');
     DOMCategoria.setAttribute('id', 'id-' + categoria.Categoria);
@@ -64,7 +65,7 @@ function CreaDivBiciclette(biciclette, nRow) {
             }
         }
 
-        divRow.appendChild(callFunctionNodeElement('creaDivBiciclettaSingola', item)); //CreaDivBiciclettaSingola(item));
+        divRow.appendChild(callFunctionNodeElement('creaDivBiciclettaSingola', item));
     }
     if (divRow.childNodes.length > 0) {
         divBiciclette.appendChild(divRow);

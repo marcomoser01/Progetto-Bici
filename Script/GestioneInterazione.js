@@ -1,7 +1,8 @@
 import { callFunction as callFunctionNodeElement } from './GestioneDOM/GeneraNodeElement.js';
 import * as Prenotazioni from './Prenotazioni.js';
 import { callFunction as callFunctionDati } from './ClassDati.js';
-
+import { creaDomCarrello } from './GestioneDOM/CreaDomCarrello.js';
+import { changeCarrello as changeDomCarrello } from './GestioneDOM/CreaDomCarrello.js';
 
 
 let CARRELLO = [];
@@ -19,6 +20,14 @@ export function callFunction(nomeFunzione, ...arg) {
     return risultato;
 }
 
+function getCarrello() {
+    return CARRELLO;
+}
+
+function changeCarrello(carrello) {
+    CARRELLO = carrello;
+    changeDomCarrello(carrello);
+}
 
 
 /*
@@ -78,11 +87,8 @@ function prenota() {
     }
 
     CARRELLO = [];
-    callFunctionNodeElement('aggiornaMenu');
-}
-
-function getCarrello() {
-    return CARRELLO;
+    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
+    creaDomCarrello();
 }
 
 function controlloPrenotate() {
@@ -95,5 +101,4 @@ function controlloPrenotate() {
             }
         }
     }
-    console.log(CARRELLO);
 }

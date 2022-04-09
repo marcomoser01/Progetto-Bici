@@ -1,7 +1,6 @@
 import { callFunction as callFunctionNodeElement } from './GeneraNodeElement.js';
 import { callFunction as callFunctionDati } from './../ClassDati.js';
 import { callFunction as callFunctionInterazioni } from '../GestioneInterazione.js';
-import { changeCarrello } from './CreaDomCarrello.js';
 
 export function callFunction(nomeFunzione, ...arg) {
     let risultato;
@@ -51,7 +50,7 @@ function imgIsGray(id) {
 
 function onchangeRadioButton(id, prezzo, CARRELLO) {
     CARRELLO[getIndexScelte(id, CARRELLO)].FasciaOraria = prezzo;
-    changeCarrello(CARRELLO);
+    callFunctionInterazioni('changeCarrello', CARRELLO);
 }
 
 function getIndexScelte(id, CARRELLO) {

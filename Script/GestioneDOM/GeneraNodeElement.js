@@ -45,7 +45,9 @@ function CreaDOMImmagine(bicicletta, grayScale = true) {
     img.setAttribute('class', 'img-biciletta');
     img.setAttribute('id', 'id-img-' + bicicletta.ID);
     img.src = bicicletta.Immagine;
-    if (callFunctionInterazioni('indiceBiciInCarrello', bicicletta.ID) == -1 || !grayScale) {
+    if (callFunctionDati('isAffittata', bicicletta.ID)) {
+        img.style.filter = "grayscale(1)";
+    } else if (callFunctionInterazioni('indiceBiciInCarrello', bicicletta.ID) == -1 || !grayScale) {
         img.style.filter = "grayscale(0)";
     } else {
         img.style.filter = "grayscale(1)";
@@ -111,7 +113,7 @@ function cambiaScalaGrigi(id, value) {
 function hiddenPrenota(value) {
     let prenota = document.getElementById('BottonePrenota'),
         pCostoTotale = document.getElementById('p-PrezzoTotale');
-    
+
     if (!value) {
         prenota.removeAttribute('hidden');
         pCostoTotale.removeAttribute('hidden');
@@ -150,7 +152,7 @@ function createDivRadio(bicicletta, prezzo, CARRELLO) {
     input.setAttribute('name', 'prezzo');
     input.addEventListener('change', () => { callFunctionEventListener('onchangeRadioButton', bicicletta.ID, prezzo[0], CARRELLO) });
 
-    if(prezzo[0] == bicicletta.FasciaOraria) {
+    if (prezzo[0] == bicicletta.FasciaOraria) {
         input.setAttribute('checked', true);
     }
 

@@ -35,7 +35,6 @@ export function PrenotaBici(scelte) {
     (!prenotate) ? RestituisciBici(biciPrenotate): null;
 
     return prenotate;
-
 }
 
 /*
