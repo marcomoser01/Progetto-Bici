@@ -68,10 +68,12 @@ function addElementInCarrello(id) {
     localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }
 
+/*
 function spliceCarrello(indice) {
     CARRELLO.splice(indice, 1);
     localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }
+*/
 
 /*
     Prenota le bici selezionate. Se non si fosse selezionata nessuna bicicletta visionerà un alert d'errore
@@ -90,8 +92,9 @@ function prenota() {
     localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
     creaDomCarrello();
 }
-
+/*
 function controlloPrenotate() {
+    
     for (let item of callFunctionDati('getStatusAffittate')) {
         if (item.Valore == 1) {
             for (let car in CARRELLO) {
@@ -101,4 +104,35 @@ function controlloPrenotate() {
             }
         }
     }
+    
+}
+*/
+
+function spliceCarrello(id) {
+    let count = 0,
+        risultato = false;
+    console.log(CARRELLO);
+    do {
+        if (CARRELLO[i].ID == id) {
+            CARRELLO.splice(count, 1);
+        }
+        count++;
+    } while (count < CARRELLO.length && !risultato);
+    console.log(CARRELLO);
+    //CARRELLO.splice(indice, 1);
+    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
+}
+
+function controlloPrenotate() {
+    console.log(callFunctionDati('getStatusAffittate').filter(filterByID));
+    callFunctionDati('getStatusAffittate').filter(filterByID).forEach(element => {
+        spliceCarrello(element.ID);
+    });
+}
+
+function filterByID(item) {
+    if (item.Valore == 1) {
+        return true
+    }
+    return false;
 }

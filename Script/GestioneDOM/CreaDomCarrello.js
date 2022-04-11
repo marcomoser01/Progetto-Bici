@@ -5,9 +5,10 @@ import { callFunction as callFunctionClassDati } from '../ClassDati.js';
 let CARRELLO;
 let localStorageKey = 'carrello-biciclette';
 
+
 export function creaDomCarrello() {
     CARRELLO = localStorage.getItem(localStorageKey);
-    if(CARRELLO == null) {
+    if (CARRELLO == null) {
         CARRELLO = [];
     }
     callFunctionNodeElement('hiddenPrenota', false);
@@ -63,4 +64,5 @@ export function changeCarrello(carrello) {
 function mostraPrezzoTotale() {
     let paragrafo = document.getElementById('p-PrezzoTotale');
     paragrafo.innerText = callFunctionClassDati('calcolaPrezzoTotale', CARRELLO) + '€';
+
 }

@@ -2,35 +2,19 @@ import { uploadDati } from "./CaricaFuzioniDati.js";
 
 
 let _DATI = [],
-    _pathBici = "../Dati/bici.json",
-    _pathPrezzi = "../Dati/prezzi.json";
-
+    _pathBici = "../Dati/Biciclette.json",
+    _pathPrezzi = "../Dati/Prezzi.json",
+    arrayPromise = [
+        $.getJSON(_pathBici, (dati) => CaricaCategorie(dati)),
+        $.getJSON(_pathPrezzi, (dati) => CaricaPrezzi(dati))
+    ];
 
 /*
     Prende i dati dai file json e li carica in _DATI. Successivamente manda i dati a GestioneDati e fa creare il menu.
 */
-$(document).ready(function() {
-    $.ajax({
-        url: _pathBici,
-        type: "get",
-        success: function(biciJson) {
-            CaricaBici(biciJson);
-        },
-        complete: function() {
-            $.ajax({
-                url: _pathPrezzi,
-                type: "get",
-                success: function(prezziJson) {
-                    CaricaPrezzi(prezziJson);
-                },
-                complete: function() {
-                    uploadDati(_DATI);
-                }
-            });
-        }
+Promise.all(arrayPromise).then(() => { uploadDati(_DATI) });
 
-    });
-});
+
 
 /*
   Controlla se una determinata categoria è già presente nell'array
@@ -48,18 +32,29 @@ function CategoriaEsistente(categoria) {
     return risultato;
 }
 
+function CaricaCategorie(categorieJson) {
+    let oggetto = {};
+    for (let item of categorieJson) {
+        oggetto = {
+            "Categoria": item.Categoria,
+            "Biciclette": CaricaBici(item.Biciclette)
+        };
+        _DATI.push(oggetto);
+    }
+}
+
 /*
     Serve per fare il push delle biciclette da il file json all'array _DATI
     @json --> Stringa contenente i dati delle biciclette
 */
 function CaricaBici(biciJson) {
-    let indiceCategoria, oggetto;
-    for (var item of biciJson) {
-        indiceCategoria = CategoriaEsistente(item.Categoria);
-        oggetto = CreaObjectBici(indiceCategoria, item);
+    let oggetto = [];
 
-        (indiceCategoria == -1) ? _DATI.push(oggetto): _DATI[indiceCategoria].Biciclette.push(oggetto);
+    for (var item of biciJson) {
+        oggetto.push(CreaObjectBici(item));
     }
+
+    return oggetto;
 }
 
 /*
@@ -68,26 +63,14 @@ function CaricaBici(biciJson) {
     @item --> Bicicletta da inserire
     @return restituisce l'oggetto da inserire nell'array
 */
-function CreaObjectBici(indiceCategoria, item) {
-    let oggetto;
-    if (indiceCategoria == -1) {
-        oggetto = {
-            Categoria: item.Categoria,
-            Biciclette: [{
-                ID: item.ID,
-                Modello: item.Modello,
-                Affittata: item.Affittata,
-                Immagine: item.Immagine
-            }]
-        };
-    } else {
-        oggetto = {
-            ID: item.ID,
-            Modello: item.Modello,
-            Affittata: item.Affittata,
-            Immagine: item.Immagine
-        };
-    }
+function CreaObjectBici(item) {
+    let oggetto = {
+        ID: item.ID,
+        Modello: item.Modello,
+        Affittata: item.Affittata,
+        Immagine: item.Immagine
+    };
+
     return oggetto;
 }
 

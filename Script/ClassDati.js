@@ -24,16 +24,17 @@ export function callFunction(nomeFunzione, ...arg) {
     try {
         let funzione = eval(nomeFunzione);
         risultato = funzione(...arg);
-    } catch (e){
+    } catch (e) {
         risultato = e;
     }
     return risultato;
 }
 
 
+
 let toString = () => { return _DATI.toString() };
 let getAllCategorie = () => { return _DATI.getAllCategorie() };
-let getAllBiciclette = () => { return  _DATI.getAllBiciclette()};
+let getAllBiciclette = () => { return _DATI.getAllBiciclette() };
 let getCategoria = (id, nomeCategoria, tipoRisultato) => { return _DATI.getCategoria(id, nomeCategoria, tipoRisultato) };
 let findIndexBike = (arrayBiciclette, id) => { return _DATI.findIndexBike(arrayBiciclette, id) };
 let getIndiciBicicletta = (id) => { return _DATI.getIndiciBicicletta(id) };
