@@ -36,7 +36,13 @@
                 "Affittata": false,
                 "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491126840-P6OC4GZ8WOTPUEI67WM8/DSC_0072.jpg?format=750w"
             }
-        ]
+        ],
+        "Prezzi": {
+            "HalfDay": 50,
+            "FullDay": 75,
+            "FourDays": 225,
+            "OneWeek": 32
+        }
     },
     {
         "Categoria": "Standard Pedal",
@@ -64,7 +70,13 @@
                 "Affittata": false,
                 "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491367132-9HBS0XT1OL5XQDZTIF2O/DSC_0075.jpg?format=750w"
             }
-        ]
+        ],
+        "Prezzi": {
+            "HalfDay": 25,
+            "FullDay": 35,
+            "FourDays": 80,
+            "OneWeek": 130
+        }
     },
     {
         "Categoria": "Premium Bikes",
@@ -80,7 +92,13 @@
                 "Affittata": false,
                 "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603490701012-H10X9OK2YWVEF1R1CDIH/DSC_0103.jpg?format=500w"
             }
-        ]
+        ],
+        "Prezzi": {
+            "HalfDay": 55,
+            "FullDay": 70,
+            "FourDays": 160,
+            "OneWeek": 195
+        }
     },
     {
         "Categoria": "Kids' Bikes",
@@ -96,6 +114,12 @@
                 "Affittata": false,
                 "Immagine": "https://images.squarespace-cdn.com/content/v1/5642736de4b07810c0a82ac8/1603491792548-8OHM0LEUOYMDMGPCY0C2/DSC_0097.jpg?format=750w"
             }
-        ]
+        ],
+        "Prezzi": {
+            "HalfDay": 20,
+            "FullDay": 25,
+            "FourDays": 70,
+            "OneWeek": 100
+        }
     }
 ]

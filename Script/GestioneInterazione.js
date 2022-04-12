@@ -1,8 +1,6 @@
-import { callFunction as callFunctionNodeElement } from './GestioneDOM/GeneraNodeElement.js';
 import * as Prenotazioni from './Prenotazioni.js';
-import { callFunction as callFunctionDati } from './ClassDati.js';
-import { creaDomCarrello } from './GestioneDOM/CreaDomCarrello.js';
-import { changeCarrello as changeDomCarrello } from './GestioneDOM/CreaDomCarrello.js';
+import * as ClassDati from './ClassDati.js';
+import * as CreaDomCarrello from './GestioneDOM/CreaDomCarrello.js';
 
 
 let CARRELLO = [];
@@ -20,20 +18,20 @@ export function callFunction(nomeFunzione, ...arg) {
     return risultato;
 }
 
-function getCarrello() {
+export function getCarrello() {
     return CARRELLO;
 }
 
-function changeCarrello(carrello) {
+export function changeCarrello(carrello) {
     CARRELLO = carrello;
-    changeDomCarrello(carrello);
+    CreaDomCarrello.changeCarrello(carrello);
 }
 
 
 /*
     Prende, se presenti, il carrello dal localStorage
 */
-function pullCarrelloLocalStorage() {
+export function pullCarrelloLocalStorage() {
     let localStorageString = localStorage.getItem(localStorageKey);
 
     if (localStorageString != null) {
@@ -47,21 +45,21 @@ function pullCarrelloLocalStorage() {
     Mi dice se una bici è già stata seleziona
     @return restituisce o l'indice in cui si trova nell'array scelta, oppure -1
 */
-function indiceBiciInCarrello(id) {
+export function indiceBiciInCarrello(id) {
     CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
     if (CARRELLO == null) {
         CARRELLO = [];
     }
 
-    return callFunctionDati('findIndexBike', CARRELLO, id);
+    return ClassDati.findIndexBike(CARRELLO, id);
 }
 
-function addElementInCarrello(id) {
+export function addElementInCarrello(id) {
     CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
     if (CARRELLO == null) {
         CARRELLO = [];
     }
-    let dato = callFunctionDati('getBiciclettaByID', id);
+    let dato = ClassDati.getBiciclettaByID(id);
 
     dato.FasciaOraria = 'HalfDay';
     CARRELLO.push(dato);
@@ -69,63 +67,49 @@ function addElementInCarrello(id) {
 }
 
 /*
-function spliceCarrello(indice) {
-    CARRELLO.splice(indice, 1);
-    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
-}
-*/
-
-/*
     Prenota le bici selezionate. Se non si fosse selezionata nessuna bicicletta visionerà un alert d'errore
 */
-function prenota() {
+export function prenota() {
     let prenotazione = Prenotazioni.PrenotaBici(CARRELLO);
     if (prenotazione == -1) {
         alert("Non è stata selezionata nessuna bicicletta, la invitiamo a selezionare delle biciclette");
     } else if (!prenotazione) {
         alert("Le bici non sono state prenotate");
     } else {
-        alert("Le bici sono state prenotate per un costo totale di: " + callFunctionDati('calcolaPrezzoTotale', CARRELLO));
+        alert("Le bici sono state prenotate per un costo totale di: " + ClassDati.calcolaPrezzoTotale(CARRELLO));
     }
 
     CARRELLO = [];
     localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
-    creaDomCarrello();
+    CreaDomCarrello.creaDomCarrello();
 }
+
+
+
 /*
-function controlloPrenotate() {
-    
-    for (let item of callFunctionDati('getStatusAffittate')) {
-        if (item.Valore == 1) {
-            for (let car in CARRELLO) {
-                if (CARRELLO[car].ID == item.ID) {
-                    spliceCarrello(car);
-                }
-            }
-        }
-    }
-    
-}
+    ATTENZIONE!!! Funzioni di ordine superioreeee
 */
 
-function spliceCarrello(id) {
-    let count = 0,
-        risultato = false;
-    console.log(CARRELLO);
-    do {
-        if (CARRELLO[i].ID == id) {
-            CARRELLO.splice(count, 1);
-        }
-        count++;
-    } while (count < CARRELLO.length && !risultato);
-    console.log(CARRELLO);
-    //CARRELLO.splice(indice, 1);
-    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
+
+export function spliceCarrello(id) {
+    if (CARRELLO.length > 0) {
+        let count = 0,
+            risultato = false;
+
+        do {
+            if (CARRELLO[count].ID == id) {
+                CARRELLO.splice(count, 1);
+            }
+            count++;
+        } while (count < CARRELLO.length && !risultato);
+
+        localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
+    }
 }
 
 function controlloPrenotate() {
-    console.log(callFunctionDati('getStatusAffittate').filter(filterByID));
-    callFunctionDati('getStatusAffittate').filter(filterByID).forEach(element => {
+    //
+    ClassDati.getStatusAffittate().filter(filterByID).forEach(element => {
         spliceCarrello(element.ID);
     });
 }

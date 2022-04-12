@@ -1,20 +1,18 @@
 import { uploadDati } from "./CaricaFuzioniDati.js";
 
-
 let _DATI = [],
     _pathBici = "../Dati/Biciclette.json",
-    _pathPrezzi = "../Dati/Prezzi.json",
     arrayPromise = [
-        $.getJSON(_pathBici, (dati) => CaricaCategorie(dati)),
-        $.getJSON(_pathPrezzi, (dati) => CaricaPrezzi(dati))
+        //$.getJSON(_pathBici, (dati) => CaricaCategorie(dati))        
+        $.getJSON(_pathBici, (dati) => { _DATI = dati; })
     ];
 
 /*
     Prende i dati dai file json e li carica in _DATI. Successivamente manda i dati a GestioneDati e fa creare il menu.
 */
-Promise.all(arrayPromise).then(() => { uploadDati(_DATI) });
-
-
+Promise.all(arrayPromise).then(() => {
+    uploadDati(_DATI);
+});
 
 /*
   Controlla se una determinata categoria è già presente nell'array
@@ -37,7 +35,8 @@ function CaricaCategorie(categorieJson) {
     for (let item of categorieJson) {
         oggetto = {
             "Categoria": item.Categoria,
-            "Biciclette": CaricaBici(item.Biciclette)
+            "Biciclette": CaricaBici(item.Biciclette),
+            "Prezzi": item.Prezzi
         };
         _DATI.push(oggetto);
     }
@@ -72,49 +71,4 @@ function CreaObjectBici(item) {
     };
 
     return oggetto;
-}
-
-/*
-    Serve per fare il push dei prezzi da il file json all'array _DATI
-    @json --> Stringa contenente i dati dei prezzi
-*/
-function CaricaPrezzi(prezzoJson) {
-    let indiceCategoria, oggetto;
-    for (var item of prezzoJson) {
-        indiceCategoria = CategoriaEsistente(item.Categoria);
-        oggetto = CreaObjectPrezzo(indiceCategoria, item);
-
-        (indiceCategoria == -1) ? _DATI.push(oggetto): _DATI[indiceCategoria].Prezzi = oggetto;
-    }
-}
-
-/*
-    Crea il singolo oggetto prezo che poi verrà pushatto nell'array
-    @indiceCategoria --> Dice se la categoria è già esistente oppure no
-    @item --> Prezzo da inserire
-    @return restituisce l'oggetto da inserire nell'array
-*/
-function CreaObjectPrezzo(indiceCategoria, item) {
-    let prezzo;
-    if (indiceCategoria == -1) {
-        prezzo = {
-            Categoria: item.Categoria,
-            Biciclette: [],
-            Prezzi: {
-                HalfDay: item.HalfDay,
-                FullDay: item.FullDay,
-                FourDays: item.FourDays,
-                OneWeek: item.OneWeek
-            }
-        };
-    } else {
-        _DATI[indiceCategoria].Prezzi
-        prezzo = {
-            HalfDay: item.HalfDay,
-            FullDay: item.FullDay,
-            FourDays: item.FourDays,
-            OneWeek: item.OneWeek
-        };
-    }
-    return prezzo;
 }

@@ -1,5 +1,5 @@
-import { callFunction as callFunctionInterazioni } from '../GestioneInterazione.js';
-import { callFunction as callFunctionNodeElement } from './GeneraNodeElement.js';
+import * as GestioneInterazione from '../GestioneInterazione.js';
+import * as GeneraNodeElement from './GeneraNodeElement.js';
 
 
 
@@ -8,9 +8,9 @@ import { callFunction as callFunctionNodeElement } from './GeneraNodeElement.js'
     @dati --> dati delle biciclette per poter creare il menù
 */
 export function creaDivMenu(dati) {
-    callFunctionNodeElement('removeAllChildNodes', "div-catalogo");
-    callFunctionNodeElement('hiddenPrenota', true);
-    callFunctionInterazioni('pullCarrelloLocalStorage');
+    GeneraNodeElement.removeAllChildNodes("div-catalogo");
+    GeneraNodeElement.hiddenPrenota(true);
+    GestioneInterazione.pullCarrelloLocalStorage();
     let divCatalogo = document.getElementById('div-catalogo');
 
     for (let item of dati) {
@@ -39,7 +39,7 @@ function CreaParagrafiCategorie(categoria, tag = 'div') {
     divContenitoreBiciclette = CreaDivBiciclette(categoria.Biciclette, 2);
     divContenitoreBiciclette.setAttribute('class', 'div-contenitoreBiciclette');
     divContenitoreBiciclette.setAttribute('id', 'contenitore-' + categoria.Categoria);
-    DOMCategoria.appendChild(callFunctionNodeElement('creaDivNomePrezzo', categoria.Categoria, categoria.Prezzi));
+    DOMCategoria.appendChild(GeneraNodeElement.creaDivNomePrezzo(categoria.Categoria, categoria.Prezzi));
     DOMCategoria.appendChild(divContenitoreBiciclette);
 
 
@@ -65,7 +65,7 @@ function CreaDivBiciclette(biciclette, nRow) {
             }
         }
 
-        divRow.appendChild(callFunctionNodeElement('creaDivBiciclettaSingola', item));
+        divRow.appendChild(GeneraNodeElement.creaDivBiciclettaSingola(item));
     }
     if (divRow.childNodes.length > 0) {
         divBiciclette.appendChild(divRow);

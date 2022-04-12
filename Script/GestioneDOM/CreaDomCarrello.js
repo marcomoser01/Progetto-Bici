@@ -1,6 +1,6 @@
-import { callFunction as callFunctionInterazioni } from '../GestioneInterazione.js';
-import { callFunction as callFunctionNodeElement } from './GeneraNodeElement.js';
-import { callFunction as callFunctionClassDati } from '../ClassDati.js';
+import * as GestioneInterazione from '../GestioneInterazione.js';
+import * as GeneraNodeElement from './GeneraNodeElement.js';
+import * as ClassDati from '../ClassDati.js';
 
 let CARRELLO;
 let localStorageKey = 'carrello-biciclette';
@@ -11,9 +11,9 @@ export function creaDomCarrello() {
     if (CARRELLO == null) {
         CARRELLO = [];
     }
-    callFunctionNodeElement('hiddenPrenota', false);
+    GeneraNodeElement.hiddenPrenota(false);
     setCarrelloDati();
-    callFunctionNodeElement('removeAllChildNodes', "div-catalogo");
+    GeneraNodeElement.removeAllChildNodes("div-catalogo");
 
     creaDivCarrello();
     mostraPrezzoTotale();
@@ -23,7 +23,7 @@ export function creaDomCarrello() {
 
 
 function setCarrelloDati() {
-    CARRELLO = callFunctionInterazioni('getCarrello');
+    CARRELLO = GestioneInterazione.getCarrello();
 }
 
 /*
@@ -50,8 +50,8 @@ function creaRowCarrello(item) {
     let divRow = document.createElement('div');
     divRow.setAttribute('class', 'div-RowGrid div-RowCarrello');
 
-    divRow.appendChild(callFunctionNodeElement('creaDivBiciclettaSingola', item, false));
-    divRow.appendChild(callFunctionNodeElement('creaRadioBottonPrice', item, CARRELLO));
+    divRow.appendChild(GeneraNodeElement.creaDivBiciclettaSingola(item, false));
+    divRow.appendChild(GeneraNodeElement.creaRadioBottonPrice(item, CARRELLO));
     return divRow;
 }
 
@@ -63,6 +63,6 @@ export function changeCarrello(carrello) {
 
 function mostraPrezzoTotale() {
     let paragrafo = document.getElementById('p-PrezzoTotale');
-    paragrafo.innerText = callFunctionClassDati('calcolaPrezzoTotale', CARRELLO) + '€';
+    paragrafo.innerText = ClassDati.calcolaPrezzoTotale(CARRELLO) + '€';
 
 }

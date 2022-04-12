@@ -32,17 +32,17 @@ export function callFunction(nomeFunzione, ...arg) {
 
 
 
-let toString = () => { return _DATI.toString() };
-let getAllCategorie = () => { return _DATI.getAllCategorie() };
-let getAllBiciclette = () => { return _DATI.getAllBiciclette() };
-let getCategoria = (id, nomeCategoria, tipoRisultato) => { return _DATI.getCategoria(id, nomeCategoria, tipoRisultato) };
-let findIndexBike = (arrayBiciclette, id) => { return _DATI.findIndexBike(arrayBiciclette, id) };
-let getIndiciBicicletta = (id) => { return _DATI.getIndiciBicicletta(id) };
-let getBikeOfCategory = (nomeCategoria) => { return _DATI.getBikeOfCategory(nomeCategoria) };
-let getBiciclettaByID = (id) => { return _DATI.getBiciclettaByID(id) };
-let getPrice = (categoria, id) => { return _DATI.getPrice(categoria, id) };
-let setAffittata = (id, Affitta) => { return _DATI.setAffittata(id, Affitta) };
-let changeBici = (Biciclette) => { return _DATI.changeBici(Biciclette) };
-let isAffittata = (id) => { return _DATI.isAffittata(id) };
-let getStatusAffittate = () => { return _DATI.getStatusAffittate() };
-let calcolaPrezzoTotale = (arrayBiciclette, fasciaOraria) => { return _DATI.calcolaPrezzoTotale(arrayBiciclette, fasciaOraria) };
+export let toString = () => { return _DATI.toString() };
+export let getAllCategorie = () => { return _DATI.getAllCategorie() };
+export let getAllBiciclette = () => { return _DATI.getAllBiciclette() };
+export let getCategoria = (id, nomeCategoria, tipoRisultato) => { return _DATI.getCategoria(id, nomeCategoria, tipoRisultato) };
+export let findIndexBike = (arrayBiciclette, id) => { return _DATI.findIndexBike(arrayBiciclette, id) };
+export let getIndiciBicicletta = (id) => { return _DATI.getIndiciBicicletta(id) };
+export let getBikeOfCategory = (nomeCategoria) => { return _DATI.getBikeOfCategory(nomeCategoria) };
+export let getBiciclettaByID = (id) => { return _DATI.getBiciclettaByID(id) };
+export let getPrice = (categoria, id) => { return _DATI.getPrice(categoria, id) };
+export let setAffittata = (id, Affitta) => { return _DATI.setAffittata(id, Affitta) };
+export let changeBici = (Biciclette) => { return _DATI.changeBici(Biciclette) };
+export let isAffittata = (id) => { return _DATI.isAffittata(id) };
+export let getStatusAffittate = () => { return _DATI.getStatusAffittate() };
+export let calcolaPrezzoTotale = (arrayBiciclette, fasciaOraria) => { return _DATI.calcolaPrezzoTotale(arrayBiciclette, fasciaOraria) };

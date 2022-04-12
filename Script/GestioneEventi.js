@@ -1,9 +1,9 @@
-import { callFunction as callFunctionInterazioni } from './GestioneInterazione.js';
+import * as GestioneInterazione from './GestioneInterazione.js';
 import { creaDomCarrello } from './GestioneDOM/CreaDomCarrello.js';
 import { callCreaDivMenu } from './ClassDati.js';
 
 
-let prenota = () => { return callFunctionInterazioni('prenota') }
+let prenota = () => { return GestioneInterazione.prenota() }
 
 
 $("#BottonePrenota").click(prenota);

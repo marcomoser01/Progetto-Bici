@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 3%;
-    background: url("../background.jpeg");
+    background: url("./background.jpeg");
     background-size: 100% auto;
 }
 
@@ -86,7 +86,7 @@ img {
     margin-left: 25%;
 }
 
-#BottoneCarrello > svg {
+#BottoneCarrello>svg {
     height: 100px;
     width: 100px;
 }
@@ -95,11 +95,10 @@ img {
     margin-right: 25%;
 }
 
-#BottoneHome > svg {
+#BottoneHome>svg {
     height: 100px;
     width: 100px;
 }
-
 
 .containerBottone {
     display: flex;
