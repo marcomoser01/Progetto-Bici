@@ -6,7 +6,6 @@ import * as CreaDomCarrello from './GestioneDOM/CreaDomCarrello.js';
 let CARRELLO = [];
 let localStorageKey = 'carrello-biciclette';
 
-
 export function callFunction(nomeFunzione, ...arg) {
     let risultato;
     try {
@@ -46,16 +45,12 @@ export function pullCarrelloLocalStorage() {
     @return restituisce o l'indice in cui si trova nell'array scelta, oppure -1
 */
 export function indiceBiciInCarrello(id) {
-    CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
-    if (CARRELLO == null) {
-        CARRELLO = [];
-    }
-
+    getLocalStorage();
     return ClassDati.findIndexBike(CARRELLO, id);
 }
 
 export function addElementInCarrello(id) {
-    CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
+    getLocalStorage();
     if (CARRELLO == null) {
         CARRELLO = [];
     }
@@ -63,7 +58,7 @@ export function addElementInCarrello(id) {
 
     dato.FasciaOraria = 'HalfDay';
     CARRELLO.push(dato);
-    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
+    setLocalStorage();
 }
 
 /*
@@ -91,32 +86,32 @@ export function prenota() {
 */
 
 
-export function spliceCarrello(id) {
-    if (CARRELLO.length > 0) {
-        let count = 0,
-            risultato = false;
-
-        do {
-            if (CARRELLO[count].ID == id) {
-                CARRELLO.splice(count, 1);
-            }
-            count++;
-        } while (count < CARRELLO.length && !risultato);
-
-        localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
-    }
+export function spliceCarrello(indiceElemento) {
+    CARRELLO.splice(indiceElemento, 1);
+    setLocalStorage();
 }
 
-function controlloPrenotate() {
+export function controlloPrenotate() {
     //
     ClassDati.getStatusAffittate().filter(filterByID).forEach(element => {
         spliceCarrello(element.ID);
     });
 }
 
-function filterByID(item) {
+export function filterByID(item) {
     if (item.Valore == 1) {
         return true
     }
     return false;
+}
+
+export function getLocalStorage() {
+    CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
+    if (CARRELLO == null) {
+        CARRELLO = [];
+    }
+}
+
+export function setLocalStorage() {
+    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }

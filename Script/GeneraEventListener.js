@@ -13,7 +13,6 @@ export function callFunction(nomeFunzione, ...arg) {
     return risultato;
 }
 
-
 export function clickBicicletta(id) {
     if (ClassDati.isAffittata(id)) {
         alert("La bici è già stata prenotata");
