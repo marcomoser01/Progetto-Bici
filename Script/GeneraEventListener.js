@@ -1,6 +1,7 @@
 import * as GeneraNodeElement from './GestioneDOM/GeneraNodeElement.js';
 import * as ClassDati from './ClassDati.js';
 import * as GestioneInterazione from './GestioneInterazione.js';
+import * as Carrello from './Carrello.js';
 
 export function callFunction(nomeFunzione, ...arg) {
     let risultato;

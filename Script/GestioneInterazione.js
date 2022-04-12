@@ -2,7 +2,6 @@ import * as Prenotazioni from './Prenotazioni.js';
 import * as ClassDati from './ClassDati.js';
 import * as CreaDomCarrello from './GestioneDOM/CreaDomCarrello.js';
 
-
 let CARRELLO = [];
 let localStorageKey = 'carrello-biciclette';
 
@@ -92,7 +91,6 @@ export function spliceCarrello(indiceElemento) {
 }
 
 export function controlloPrenotate() {
-    //
     ClassDati.getStatusAffittate().filter(filterByID).forEach(element => {
         spliceCarrello(element.ID);
     });
