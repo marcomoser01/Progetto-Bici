@@ -1,5 +1,5 @@
 import { uploadDati } from "./CaricaFuzioniDati.js";
-import { getDati } from './Firebase.js';
+import { getDati, pushDati } from './Firebase.js';
 
 let _DATI = [],
     _pathBici = "../Dati/Biciclette.json",
@@ -26,7 +26,7 @@ $(document).ready(() => {
     $(document).ready(() => {
         getDati().then((values)=>{
             _DATI = values;
-            console.log("ciao");
+            pushDati();
             uploadDati(_DATI);
         });
     });

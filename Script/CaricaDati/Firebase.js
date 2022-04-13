@@ -34,3 +34,26 @@ export async function getDati() {
     await downloadDati();
     return DATI;
 }
+
+
+export async function pushDati() {
+    // Reference messages collection
+    let messagesRef = firebase.database().ref();
+    let arrayPromesse = [
+        messagesRef.once('value')
+    ];
+    await Promise.all(arrayPromesse)
+    .then((dati) => { 
+        console.log(dati[0]) 
+    });
+    /*
+    var newMessageRef = messagesRef.push();
+    newMessageRef.set({
+        name: "ciao",
+        email: "email",
+        subject: "subject",
+        message: "message"
+    });
+    */
+ 
+}
