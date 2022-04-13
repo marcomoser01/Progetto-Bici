@@ -1,17 +1,35 @@
 import { uploadDati } from "./CaricaFuzioniDati.js";
+import { getDati } from './Firebase.js';
 
 let _DATI = [],
     _pathBici = "../Dati/Biciclette.json",
-    arrayPromise = [
-        //$.getJSON(_pathBici, (dati) => CaricaCategorie(dati))        
+    arrayPromise = [       
         $.getJSON(_pathBici, (dati) => { _DATI = dati; })
     ];
 
 /*
     Prende i dati dai file json e li carica in _DATI. Successivamente manda i dati a GestioneDati e fa creare il menu.
 */
+/*
 Promise.all(arrayPromise).then(() => {
+    getDati().then((values)=>{
+        console.log(values);
+    });
     uploadDati(_DATI);
+});
+*/
+
+/*
+    Prende i dati da firestore. Successivamente manda i dati a GestioneDati e fa creare il menu.
+*/
+$(document).ready(() => {
+    $(document).ready(() => {
+        getDati().then((values)=>{
+            _DATI = values;
+            console.log("ciao");
+            uploadDati(_DATI);
+        });
+    });
 });
 
 /*
