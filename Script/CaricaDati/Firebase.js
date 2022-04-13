@@ -12,7 +12,7 @@ const config = {
 
 
 async function downloadDati() {
-    if(firebase.apps.length == 0) {
+    if (firebase.apps.length == 0) {
         firebase.initializeApp(config);
     }
 
@@ -21,9 +21,9 @@ async function downloadDati() {
         database.ref().once('value')
     ];
     await Promise.all(arrayPromesse)
-    .then((dati) => { 
-        setDati(dati[0].val()) 
-    });
+        .then((dati) => {
+            setDati(dati[0].val())
+        });
 }
 
 function setDati(dati) {
@@ -36,24 +36,12 @@ export async function getDati() {
 }
 
 
-export async function pushDati() {
+export async function pushDati(dati) {
     // Reference messages collection
     let messagesRef = firebase.database().ref();
-    let arrayPromesse = [
-        messagesRef.once('value')
-    ];
-    await Promise.all(arrayPromesse)
-    .then((dati) => { 
-        console.log(dati[0]) 
-    });
-    /*
-    var newMessageRef = messagesRef.push();
-    newMessageRef.set({
-        name: "ciao",
-        email: "email",
-        subject: "subject",
-        message: "message"
-    });
-    */
- 
+
+    messagesRef.remove();
+
+    return messagesRef.set(dati);
+
 }

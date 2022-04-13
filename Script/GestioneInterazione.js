@@ -76,8 +76,8 @@ export function prenota() {
     CARRELLO = [];
     localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
     CreaDomCarrello.creaDomCarrello();
+    ClassDati.pushDati().then();
 }
-
 
 
 /*

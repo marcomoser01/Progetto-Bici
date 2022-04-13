@@ -1,5 +1,5 @@
 import { creaDivMenu } from './GestioneDOM/ModifyDOM.js';
-import { getDati } from './CaricaDati/CaricaFuzioniDati.js';
+import { getDati, uploadDati } from './CaricaDati/CaricaFuzioniDati.js';
 
 let _DATI = [];
 
@@ -46,3 +46,14 @@ export let changeBici = (Biciclette) => { return _DATI.changeBici(Biciclette) };
 export let isAffittata = (id) => { return _DATI.isAffittata(id) };
 export let getStatusAffittate = () => { return _DATI.getStatusAffittate() };
 export let calcolaPrezzoTotale = (arrayBiciclette, fasciaOraria) => { return _DATI.calcolaPrezzoTotale(arrayBiciclette, fasciaOraria) };
+export let pushDati = async() => { await _DATI.pushDati() };
+
+export function setAllPrenotabili() {
+    let dati = getDati();
+    dati.forEach(element => {
+        element.Biciclette.forEach((bicicletta) => {
+            bicicletta.Affittata = false;
+        });
+    });
+    pushDati().then(uploadDati());
+}

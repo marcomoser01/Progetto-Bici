@@ -1,15 +1,28 @@
 import { ConstructorDati } from '../ClassDati.js';
+import * as Firebase from './Firebase.js';
 
 
 let _DATI;
 let raccoltaFunzioni;
 
+
+//Prende i dati da firestore. Successivamente manda i dati a GestioneDati e fa creare il menu.
+$(document).ready(() => {
+    Firebase.getDati().then((dati) => {
+        _DATI = dati;
+        uploadDati();
+    });
+});
+
+async function pushDati() {
+    await Firebase.pushDati(_DATI);
+}
+
 export function getDati() {
     return _DATI;
 }
 
-export function uploadDati(dati) {
-    _DATI = dati;
+export function uploadDati() {
     raccoltaFunzioni = {};
     setRaccoltaFunzioni();
     ConstructorDati(raccoltaFunzioni);
@@ -30,6 +43,8 @@ function setRaccoltaFunzioni() {
     raccoltaFunzioni.isAffittata = isAffittata;
     raccoltaFunzioni.getStatusAffittate = getStatusAffittate;
     raccoltaFunzioni.calcolaPrezzoTotale = calcolaPrezzoTotale;
+    raccoltaFunzioni.downloadDati = Firebase.getDati;
+    raccoltaFunzioni.pushDati = pushDati;
 }
 
 

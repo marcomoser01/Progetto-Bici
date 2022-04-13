@@ -1,8 +1,6 @@
-[
-    {
+[{
         "Categoria": "Electric",
-        "Biciclette": [
-            {
+        "Biciclette": [{
                 "ID": 0,
                 "Modello": "Rad Rover",
                 "Affittata": false,
@@ -48,8 +46,7 @@
     },
     {
         "Categoria": "Standard Pedal",
-        "Biciclette": [
-            {
+        "Biciclette": [{
                 "ID": 6,
                 "Modello": "7 Speed Cruiser",
                 "Affittata": false,
@@ -83,8 +80,7 @@
     },
     {
         "Categoria": "Premium Bikes",
-        "Biciclette": [
-            {
+        "Biciclette": [{
                 "ID": 10,
                 "Modello": "Premium Road Bike",
                 "Affittata": false,
@@ -106,8 +102,7 @@
     },
     {
         "Categoria": "Kids' Bikes",
-        "Biciclette": [
-            {
+        "Biciclette": [{
                 "ID": 12,
                 "Modello": "Kid's Step-over Bike",
                 "Affittata": false,

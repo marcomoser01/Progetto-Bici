@@ -20,7 +20,6 @@ function setFunzioni() {
     raccoltaFunzioniCarrello.spliceCarrello = spliceCarrello;
 }
 
-
 function getLocalStorage() {
     CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
     if (CARRELLO == null) {
@@ -65,6 +64,7 @@ function addElementInCarrello(bicicletta) {
     bicicletta.FasciaOraria = 'HalfDay';
     if (indiceBiciInCarrello(bicicletta.ID)) {
         CARRELLO.push(bicicletta);
+        setLocalStorage();
         return true;
     }
     return false;
