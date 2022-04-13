@@ -1,69 +1,27 @@
 import * as ClassDati from './ClassDati.js';
-
-
-
+import * as Carrello from './Carrello.js';
+import * as DomCarrello from './GestioneDOM/CreaDomCarrello.js';
 
 /*
-    Prenota le bici presenti in scelte
-
-    @param array contenete gli id delle biciclette
-    @return restituisce true se ha prenotato tutte le bici, false nel caso in cui non sia riuscito a prenotarle tutte, -1 nel caso in cui l'array fosse vuoto
+    Prenota le bici nel carrello
 */
-export function PrenotaBici(scelte) {
-    let prenotate = false,
-        biciPrenotate = [],
-        count = 0;
+export function Prenota() {
+    let prenotazioni = [],
+        prezzoTotale = ClassDati.calcolaPrezzoTotale(Carrello.getCarrello());
+    //Nel caso ce ne siano di già prenotate prenoterà quelle prenotabile e le altre le lascierà nel carrello (che verranno però poi rimosse alla prima invoncazione del getLocalStorage)
+    Carrello.getCarrello().forEach(element => {
+        if (ClassDati.setAffittata(element.ID, true)) {
+            prenotazioni.push(Carrello.rimuoviBiciPrenotata(element.ID));
+        }
+    });
+    DomCarrello.creaDomCarrello();
+    ClassDati.pushDati();
 
-
-    try {
-
-        do {
-            if (PrenotaBiciSingola(scelte[count])) {
-                biciPrenotate.push(ClassDati.getBiciclettaByID(scelte[count]));
-                prenotate = true;
-            } else {
-                prenotate = false;
-            }
-            count++;
-
-        } while (prenotate && count < scelte.length);
-
-    } catch (err) {
-        (err instanceof TypeError) ? prenotate = -1: null;
+    prenotazioni = prenotazioni.filter(pren => pren != null);
+    if (prenotazioni.length == 0) {
+        alert("Le bici sono state prenotate per un costo totale di: " + prezzoTotale);
+    } else {
+        //Non gestito ma eventualmente si potrebbe dire quanto si è speso per quelle prenotate
+        alert("Le bici non sono state prenotate");
     }
-
-    (!prenotate) ? RestituisciBici(biciPrenotate): null;
-
-    return prenotate;
-}
-
-/*
-    Prenota se è possibile la bicicletta che è stata passata come parametro
-    @return --> Restituisce true o false in pase all'avvenuta prenotazione oppure no
-*/
-function PrenotaBiciSingola(Bicicletta) {
-    let affittata;
-    (ClassDati.setAffittata(Bicicletta.ID, true)) ? affittata = true: affittata = false;
-
-    return affittata;
-}
-
-/*
-    Il metodo prende in ingresso un array di biciclette e imposta il valore Affittata di ogni bicicletta a false
-    @biciclette --> array contenente oggetti di tipo bici
-*/
-function RestituisciBici(biciPrenotate) {
-    for (let item of biciPrenotate) {
-        RestituisciBiciSingola(item.ID);
-    }
-}
-
-/*
-    Il metodo serve per quando si è affitata una bicicletta e la si vuole restituire. Quindi va a settare a false il valore del parametro affittata
-    @return Restituisce true o false in base al compimento della restituzione
-*/
-function RestituisciBiciSingola(Bicicletta) {
-    let restituita;
-    (ClassDati.setAffittata(Bicicletta.ID, true)) ? restituita = true: restituita = false;
-    return restituita;
 }

@@ -1,16 +1,18 @@
-import * as GestioneInterazione from '../GestioneInterazione.js';
 import * as GeneraNodeElement from './GeneraNodeElement.js';
+import * as Carrello from '../Carrello.js';
 
 
+let _CARRELLO;
 
 /*
     Modifica il DOM della pagina inserendo il menù, caricato dinamicamento da un file json
     @dati --> dati delle biciclette per poter creare il menù
 */
 export function creaDivMenu(dati) {
+    _CARRELLO = Carrello.exportCarrello();
     GeneraNodeElement.removeAllChildNodes("div-catalogo");
     GeneraNodeElement.hiddenPrenota(true);
-    GestioneInterazione.pullCarrelloLocalStorage();
+    _CARRELLO.getLocalStorage();
     let divCatalogo = document.getElementById('div-catalogo');
 
     for (let item of dati) {

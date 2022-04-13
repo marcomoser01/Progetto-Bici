@@ -1,18 +1,10 @@
-import * as GestioneInterazione from '../GestioneInterazione.js';
 import * as ClassDati from '../ClassDati.js';
 import * as GeneraEventListener from '../GeneraEventListener.js';
+import * as Carrello from '../Carrello.js';
 
 
-export function callFunction(nomeFunzione, ...arg) {
-    let risultato;
-    try {
-        let funzione = eval(nomeFunzione);
-        risultato = funzione(...arg);
-    } catch (e) {
-        risultato = e;
-    }
-    return risultato;
-}
+
+
 
 
 /*
@@ -47,7 +39,7 @@ function CreaDOMImmagine(bicicletta, grayScale = true) {
     img.src = bicicletta.Immagine;
     if (ClassDati.isAffittata(bicicletta.ID)) {
         img.style.filter = "grayscale(1)";
-    } else if (GestioneInterazione.indiceBiciInCarrello(bicicletta.ID) == -1 || !grayScale) {
+    } else if (Carrello.indiceBiciInCarrello(bicicletta.ID) == -1 || !grayScale) {
         img.style.filter = "grayscale(0)";
     } else {
         img.style.filter = "grayscale(1)";
@@ -130,19 +122,19 @@ export function removeAllChildNodes(id) {
     }
 }
 
-export function creaRadioBottonPrice(bicicletta, CARRELLO) {
+export function creaRadioBottonPrice(bicicletta) {
     let Form = document.createElement('form'),
         fasciaPrezzi = ClassDati.getPrice(null, bicicletta.ID);
 
     for (let item of Object.keys(fasciaPrezzi)) {
-        Form.appendChild(createDivRadio(bicicletta, [item, fasciaPrezzi[item]], CARRELLO));
+        Form.appendChild(createDivRadio(bicicletta, [item, fasciaPrezzi[item]]));
     }
     Form.setAttribute('id', 'id-RadioButton-' + bicicletta.ID);
 
     return Form;
 }
 
-function createDivRadio(bicicletta, prezzo, CARRELLO) {
+function createDivRadio(bicicletta, prezzo) {
     let label = document.createElement('label');
     let input = document.createElement('input');
 
@@ -150,7 +142,7 @@ function createDivRadio(bicicletta, prezzo, CARRELLO) {
     input.setAttribute('class', 'input-radio');
     input.setAttribute('id', 'radio-ID-' + bicicletta.ID + '-Prezzo-' + prezzo[0]);
     input.setAttribute('name', 'prezzo');
-    input.addEventListener('change', () => { GeneraEventListener.onchangeRadioButton(bicicletta.ID, prezzo[0], CARRELLO) });
+    input.addEventListener('change', () => { GeneraEventListener.onchangeRadioButton(bicicletta.ID, prezzo[0]) });
 
     if (prezzo[0] == bicicletta.FasciaOraria) {
         input.setAttribute('checked', true);

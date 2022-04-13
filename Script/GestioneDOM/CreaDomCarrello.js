@@ -1,30 +1,20 @@
-import * as GestioneInterazione from '../GestioneInterazione.js';
 import * as GeneraNodeElement from './GeneraNodeElement.js';
 import * as ClassDati from '../ClassDati.js';
+import * as Carrello from '../Carrello.js';
 
-let CARRELLO;
-let localStorageKey = 'carrello-biciclette';
 
 
 export function creaDomCarrello() {
-    CARRELLO = localStorage.getItem(localStorageKey);
-    if (CARRELLO == null) {
-        CARRELLO = [];
-    }
+    Carrello.getLocalStorage();
     GeneraNodeElement.hiddenPrenota(false);
-    setCarrelloDati();
     GeneraNodeElement.removeAllChildNodes("div-catalogo");
 
     creaDivCarrello();
     mostraPrezzoTotale();
-    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
+
+    Carrello.setLocalStorage();
 }
 
-
-
-function setCarrelloDati() {
-    CARRELLO = GestioneInterazione.getCarrello();
-}
 
 /*
     Modifica il DOM della pagina inserendo il menù, caricato dinamicamento da un file json
@@ -33,7 +23,7 @@ function setCarrelloDati() {
 function creaDivCarrello() {
     let divCatalogo = document.getElementById('div-catalogo');
     let label;
-    for (let item of CARRELLO) {
+    for (let item of Carrello.getCarrello()) {
         label = document.createElement('label');
         label.appendChild(creaRowCarrello(item));
         divCatalogo.insertBefore(label, null);
@@ -51,18 +41,19 @@ function creaRowCarrello(item) {
     divRow.setAttribute('class', 'div-RowGrid div-RowCarrello');
 
     divRow.appendChild(GeneraNodeElement.creaDivBiciclettaSingola(item, false));
-    divRow.appendChild(GeneraNodeElement.creaRadioBottonPrice(item, CARRELLO));
+    divRow.appendChild(GeneraNodeElement.creaRadioBottonPrice(item));
+
     return divRow;
 }
 
-export function changeCarrello(carrello) {
-    CARRELLO = carrello;
-    mostraPrezzoTotale();
-    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
+
+//Probabilmente inutile
+export function changeDOMTotalePrezzo() {
+    mostraPrezzoTotale()
 }
 
 function mostraPrezzoTotale() {
     let paragrafo = document.getElementById('p-PrezzoTotale');
-    paragrafo.innerText = ClassDati.calcolaPrezzoTotale(CARRELLO) + '€';
+    paragrafo.innerText = ClassDati.calcolaPrezzoTotale(Carrello.getCarrello()) + '€';
 
 }
