@@ -1,0 +1,96 @@
+export function getLocalStorage() {
+    CARRELLO = JSON.parse(localStorage.getItem(localStorageKey));
+    if (CARRELLO == null) {
+        CARRELLO = [];
+    }
+
+    ClassDati.getStatusAffittate().filter(filterByID).forEach(element => {
+        if (isInCarrello(element.ID)) {
+            spliceCarrello(element.ID);
+        }
+    });
+}
+
+
+function isInCarrello(id) {
+    let presente = false;
+    CARRELLO.forEach((element) => {
+        if (element.ID == id) {
+            presente = true;
+        }
+    });
+    return presente;
+}
+
+function filterByID(item) {
+    if (item.Valore == 1) {
+        return true
+    }
+    return false;
+}
+
+Nella parte di codice precedente si può vedere l'utilizzo del localStorage, della funzione di ordine superiore 
+e volendo anche della gestione di array di oggetti, ma per quest'ultimi porterò un altro esempio.
+
+CARRELLO è un array di oggetti dichiarato globalmente ed attraverso  JSON.parse(localStorage.getItem(localStorageKey))  ci alloco all'interno 
+i valori presenti nel localStorage, che sarà una stringa, strutturata come un oggetto json. localStorageKey è una variabile che rappresenta una stringa.
+ClassDati.getStatusAffittate() restituisce un array di oggetti di due parametri, ID e valore, dove valore è int e può valere o 0 non affittata oppure 1 affittata.
+Su questo array ci applico un filtro, cioè mi lascia solo gli elementi che hanno l'attributo Valore = 1.
+Successivamente su questo 'sotto-array', per ogni elemento controllo se è presente nel carrello e in caso affermativo lo rimuove
+
+
+
+#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--
+
+
+
+
+export function creaDivBiciclettaSingola(bicicletta, grayScale = true) {
+    let divBici = CreaDOMBicicletta(bicicletta, grayScale);
+    divBici.appendChild(CreaDOMImmagine(bicicletta, grayScale), null);
+    divBici.appendChild(CreaDOMModello(bicicletta));
+    return divBici;
+}
+
+function CreaDOMBicicletta(bicicletta, grayScale = true) {
+    let divBici = document.createElement('div');
+    divBici.setAttribute('id', 'ID-bici-' + bicicletta.ID);
+    divBici.setAttribute('class', 'div-bicicletta');
+    if (grayScale) {
+        divBici.addEventListener('click', () => { GeneraEventListener.clickBicicletta(bicicletta.ID) });
+        divBici.addEventListener('mouseover', () => { GeneraEventListener.mouseoverBicicletta(bicicletta.ID) });
+        divBici.addEventListener('mouseout', () => { GeneraEventListener.mouseoutBicicletta(bicicletta.ID) });
+    }
+    return divBici;
+}
+
+In questo caso si può vedere la manipolazione del DOM.
+La funzione CreaDOMBicicletta si crea un elemento DOM che è sonstanzialmente un tag HTML, con la riga  document.createElement('div')
+Successivamente cambia qualche attributo come 'id' e 'class', prima di aggiungergli degli addEventListener, specificando prima l'evento che deve accadere e poi cosa fare in nel caso accadessero
+
+Nella funzione creaDivBiciclettaSingola si può anche notare una metodologia per inserire un node element, all'interno di un altro, con la riga divBici.appendChild(CreaDOMImmagine(bicicletta, grayScale), null).
+In questo caso inserisce in fila il CreaDOMBicicletta, il DOMImmagine e il DOMModello
+
+
+
+#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--#--
+
+
+
+function datiToString() {
+    let s = "";
+
+    for (let i = 0; i < _DATI.length; i++) {
+        s += "Categoria: " + _DATI[i].Categoria + "\n";
+        for (let k = 0; k < _DATI[i].Biciclette.length; k++) {
+            s += "ID: " + _DATI[i].Biciclette[k].ID +
+                "\tModello: " + _DATI[i].Biciclette[k].Modello + "\n";
+        }
+    }
+
+    return s;
+}
+
+Ho scelto questo metodo per spiegare come gestire un array di oggetti anche se poi non lo utilizzo, ma era quello in cui si vede meglio.
+Non c'è tanto da spiegare comunque, essendo _DATI in se un array va gestito attraverso un ciclo for ed essendo Biciclette un parametro che però rappresenta array
+c'è bisogno di un secondo ciclo for per gestire le biciclette singole. Va gestita sonstanzialmente come una matrice

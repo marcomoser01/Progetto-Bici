@@ -14,13 +14,13 @@ import * as Carrello from '../Carrello.js';
     @return --> restituisce un div element node
 */
 export function creaDivBiciclettaSingola(bicicletta, grayScale = true) {
-    let divBici = CreaDOMDivBici(bicicletta, grayScale);
+    let divBici = CreaDOMBicicletta(bicicletta, grayScale);
     divBici.appendChild(CreaDOMImmagine(bicicletta, grayScale), null);
     divBici.appendChild(CreaDOMModello(bicicletta));
     return divBici;
 }
 
-function CreaDOMDivBici(bicicletta, grayScale = true) {
+function CreaDOMBicicletta(bicicletta, grayScale = true) {
     let divBici = document.createElement('div');
     divBici.setAttribute('id', 'ID-bici-' + bicicletta.ID);
     divBici.setAttribute('class', 'div-bicicletta');
@@ -90,6 +90,9 @@ export function creaDivNomePrezzo(Categoria, Prezzi) {
     return div;
 }
 
+/*
+    Prende in ingresso l'id di una bicicletta ed il valore che si vuole dare al grayscale e dopo aver selezionato il dom della bicicletta cambia la tonalità
+*/
 export function cambiaScalaGrigi(id, value) {
 
     let DOMimmagine = document.getElementById('id-img-' + id);
@@ -115,6 +118,9 @@ export function hiddenPrenota(value) {
     }
 }
 
+/*
+    Preso in ingresso un id di un node element, rimuove tutti gli elementi al suo interno
+*/
 export function removeAllChildNodes(id) {
     let div = document.getElementById(id);
     while (div.firstChild) {

@@ -1,12 +1,10 @@
 import { creaDivMenu } from './GestioneDOM/ModifyDOM.js';
 import { getDati, uploadDati } from './CaricaDati/CaricaFuzioniDati.js';
-import { constructorCarrello } from './Carrello.js';
 
 let _DATI = [];
 
 export function ConstructorDati(dati) {
     _DATI = dati;
-    constructorCarrello();
     callCreaDivMenu();
 }
 

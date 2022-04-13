@@ -46,8 +46,7 @@ function creaRowCarrello(item) {
     return divRow;
 }
 
-
-//Probabilmente inutile
+//Potrei togliere il metodo e far chiamare direttamente mostraPrezzoTotale() ma mi sarebbe risultato meno capibile per il nome
 export function changeDOMTotalePrezzo() {
     mostraPrezzoTotale()
 }

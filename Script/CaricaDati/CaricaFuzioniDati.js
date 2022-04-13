@@ -3,7 +3,8 @@ import * as Firebase from './Firebase.js';
 
 
 let _DATI;
-let raccoltaFunzioni;
+let raccoltaFunzioni = {};
+
 
 
 //Prende i dati da firestore. Successivamente manda i dati a GestioneDati e fa creare il menu.
@@ -22,8 +23,12 @@ export function getDati() {
     return _DATI;
 }
 
+/*
+    La funzione serve per caricare nell'oggetto raccoltaFunzioni tutte le funzioni che potrebbero servire all'utente.
+    Si potrebbe dire che l'ho gestito quasi come una Classa java con però i dati privati.
+    Questo file diciamo che si comporta un po' come back and
+*/
 export function uploadDati() {
-    raccoltaFunzioni = {};
     setRaccoltaFunzioni();
     ConstructorDati(raccoltaFunzioni);
 }
@@ -85,7 +90,6 @@ function getAllBiciclette() {
             biciclette.push(bicicletta);
         }
     }
-
     return biciclette;
 }
 

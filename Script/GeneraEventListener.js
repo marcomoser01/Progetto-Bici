@@ -34,7 +34,7 @@ export function mouseoutBicicletta(id) {
     }
 }
 
-export function imgIsGray(id) {
+function imgIsGray(id) {
     let DOMimmagine = document.getElementById('id-img-' + id);
     return (DOMimmagine.style.filter == "grayscale(1)") ? true : false;
 }

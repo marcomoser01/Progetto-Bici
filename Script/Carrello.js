@@ -2,10 +2,11 @@ import * as CreaDomCarrello from './GestioneDOM/CreaDomCarrello.js';
 import * as ClassDati from './ClassDati.js';
 
 
-let CARRELLO;
-let raccoltaFunzioniCarrello;
+let CARRELLO = [];
+//let raccoltaFunzioniCarrello = {};
 let localStorageKey = 'carrello-biciclette';
 
+/*
 export function constructorCarrello() {
     CARRELLO = [];
     raccoltaFunzioniCarrello = {};
@@ -26,6 +27,13 @@ function setFunzioni() {
     raccoltaFunzioniCarrello.setLocalStorage = setLocalStorage;
     raccoltaFunzioniCarrello.svuotaCarrello = svuotaCarrello;
     raccoltaFunzioniCarrello.indiceBiciInCarrello = indiceBiciInCarrello;
+}
+*/
+
+
+
+export function setLocalStorage() {
+    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
 }
 
 export function getLocalStorage() {
@@ -58,14 +66,18 @@ function filterByID(item) {
     return false;
 }
 
-export function setLocalStorage() {
-    localStorage.setItem(localStorageKey, JSON.stringify(CARRELLO));
-}
+
 
 export function getCarrello() {
     return CARRELLO;
 }
 
+/*
+    Serve per quando viene modificata la fascia prezzo di una bicicletta
+
+    @param id --> id della bicicletta
+    @param fasciaOraria --> nuova fascia oraria
+*/
 export function changeCarrello(id, fasciaOraria) {
     let indice = indiceBiciInCarrello(id);
     CARRELLO[indice].FasciaOraria = fasciaOraria;
@@ -115,6 +127,7 @@ export function spliceCarrello(id) {
     Viene invocato solo quando si prenota. Serve questo metodo perchè altrimenti tramite spliceCarrello andava poi in errore quando si arrivava a chiamare getLocalStorage
 
     @param id --> id della bicicletta che si vuole rimuovere dal carrello
+    @return restituisce null se la rimozione è avvenuta con successo, altrimenti la bicicletta che si voleva rimuovere
 */
 export function rimuoviBiciPrenotata(id) {
     let risultato = ClassDati.getBiciclettaByID(id);
